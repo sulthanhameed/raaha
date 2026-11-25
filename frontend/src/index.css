@@ -590,10 +590,10 @@ body {
   .editorial-category:nth-child(8n + 5) .editorial-category__plate,
   .editorial-category:nth-child(8n + 6) .editorial-category__plate,
   .editorial-category:nth-child(8n + 7) .editorial-category__plate,
-  .editorial-category:nth-child(8n + 8) .editorial-category__plate { width: clamp(128px, 38vw, 170px); }
+  .editorial-category:nth-child(8n + 8) .editorial-category__plate { width: clamp(120px, 36vw, 160px); }
   .editorial-category:nth-child(8n + 3) .editorial-category__plate,
   .editorial-category:nth-child(8n + 5) .editorial-category__plate,
-  .editorial-category:nth-child(8n + 7) .editorial-category__plate { width: clamp(114px, 35vw, 150px); }
+  .editorial-category:nth-child(8n + 7) .editorial-category__plate { width: clamp(108px, 33vw, 142px); }
   /* Keep the enlarged first plate clear of its reveal band on small phones,
      including the selected plate's 1.045 scale. */
   .editorial-category:nth-child(8n + 1) .editorial-category__plate { left: 43%; }
