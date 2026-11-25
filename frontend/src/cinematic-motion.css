@@ -1,0 +1,602 @@
+/* Cinematic motion layer.
+   Every rule here is decoration: it never moves a control, changes layout
+   width, adds text, or receives pointer input. Animations are declared only
+   inside `prefers-reduced-motion: no-preference` so a reduced-motion visitor
+   computes `animation-name: none`, and continuous loops also stop when their
+   section scrolls away (`data-motion-paused`) or the footer pauses ambience
+   (`html[data-ambient-motion="paused"]`). */
+
+/* ---------------------------------------------------------------- *
+ * 1. Scroll-driven parallax (native timelines, no JavaScript)
+ *    `translate`/`scale` are separate properties, so they compose with
+ *    the transforms these elements already use.
+ * ---------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax-drift {
+      animation: parallax-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 5% exit 95%;
+    }
+    .parallax-drift--deep { animation-name: parallax-drift-deep; }
+    .scroll-zoom {
+      animation: scroll-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 70%;
+    }
+    /* A rule that draws itself as its section travels through the viewport. */
+    .scroll-rule {
+      animation: scroll-rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 90%;
+      transform-origin: left center;
+    }
+    .scroll-fade-up {
+      animation: scroll-fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+    }
+    html[data-ambient-motion="paused"] .parallax-drift,
+    html[data-ambient-motion="paused"] .parallax-drift--deep,
+    html[data-ambient-motion="paused"] .scroll-zoom {
+      animation: none !important;
+    }
+  }
+}
+
+@keyframes parallax-drift {
+  from { translate: 0 -3.5%; }
+  to { translate: 0 4.5%; }
+}
+@keyframes parallax-drift-deep {
+  from { translate: 0 -7%; }
+  to { translate: 0 9%; }
+}
+@keyframes scroll-zoom {
+  from { scale: 1.1; }
+  to { scale: 1; }
+}
+@keyframes scroll-rule-draw {
+  from { transform: scaleX(0); opacity: .2; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+@keyframes scroll-fade-up {
+  from { opacity: 0; translate: 0 18px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* ---------------------------------------------------------------- *
+ * 2. Masked heading reveal: the line slides out from behind a mask
+ *    instead of fading in, so long titles read as one printed line.
+ * ---------------------------------------------------------------- */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-block: .06em;
+}
+.mask-line__inner { display: block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.is-visible) .mask-line__inner { transform: translate3d(0, 108%, 0) rotate(2.5deg); }
+  .reveal.is-visible .mask-line__inner { animation: mask-line-rise 1150ms cubic-bezier(.19, 1, .22, 1) both; }
+  .reveal.is-visible .mask-line--second .mask-line__inner { animation-delay: 110ms; }
+  .reveal.is-visible .mask-line--third .mask-line__inner { animation-delay: 210ms; }
+}
+
+@keyframes mask-line-rise {
+  from { transform: translate3d(0, 108%, 0) rotate(2.5deg); }
+  to { transform: translate3d(0, 0, 0) rotate(0); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 3. Pointer light on dark banners: a warm pool that follows the
+ *    cursor inside the section. Created by useSectionLights().
+ * ---------------------------------------------------------------- */
+.section-light {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: clamp(260px, 34vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 214, 155, .16), rgba(198, 161, 91, .06) 42%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform, opacity;
+}
+[data-section-light] {
+  position: relative;
+  /* Clip the light pool: it follows the cursor and must never widen the page. */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .section-light { transition: opacity 540ms ease; }
+  [data-section-light][data-light-active="true"] .section-light { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-light { display: none; }
+}
+
+/* ---------------------------------------------------------------- *
+ * 4. Steam wisps over hot food: three blurred ribbons rising and
+ *    dissipating. Continuous, so it pauses offscreen and with ambience.
+ * ---------------------------------------------------------------- */
+.steam-field {
+  position: absolute;
+  z-index: 1;
+  inset: 8% 12% auto 12%;
+  height: 58%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.steam-wisp {
+  position: absolute;
+  bottom: 0;
+  left: var(--steam-x, 50%);
+  width: var(--steam-width, 46px);
+  height: 72%;
+  border-radius: 50% 50% 42% 42% / 62% 62% 38% 38%;
+  background: linear-gradient(to top, rgba(255, 248, 235, 0) 0%, rgba(255, 248, 235, .3) 42%, rgba(255, 252, 246, .46) 78%, rgba(255, 252, 246, 0) 100%);
+  filter: blur(9px);
+  opacity: 0;
+  transform-origin: 50% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .steam-wisp { animation: steam-rise var(--steam-duration, 9s) cubic-bezier(.42, 0, .58, 1) infinite; animation-delay: var(--steam-delay, 0s); }
+  .steam-wisp--2 { --steam-x: 38%; --steam-width: 34px; --steam-duration: 11s; --steam-delay: -3.2s; }
+  .steam-wisp--3 { --steam-x: 63%; --steam-width: 38px; --steam-duration: 10s; --steam-delay: -6.2s; }
+  [data-motion-paused="true"] .steam-wisp,
+  html[data-ambient-motion="paused"] .steam-wisp { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .steam-field { display: none; }
+}
+
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translate3d(0, 26%, 0) scaleX(.7) scaleY(.6); }
+  22% { opacity: .5; }
+  62% { opacity: .34; transform: translate3d(var(--steam-sway, 10px), -34%, 0) scaleX(1.18) scaleY(1.05); }
+  100% { opacity: 0; transform: translate3d(calc(var(--steam-sway, 10px) * -1.4), -86%, 0) scaleX(1.5) scaleY(1.25); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 5. Cart flight: a plate glyph arcs from the tapped control into the
+ *    cart button. Fixed layer, no input, removed after it lands.
+ * ---------------------------------------------------------------- */
+.cart-flight {
+  position: fixed;
+  z-index: 78;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cart-flight__chip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fff6e2, #e7c689 52%, #a97f34 100%);
+  box-shadow: 0 6px 18px rgba(23, 18, 8, .34), 0 0 0 1px rgba(255, 246, 226, .5);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.cart-flight__chip::after {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 33, 40, .55), rgba(124, 33, 40, 0) 70%);
+  content: "";
+}
+.cart-flight__trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(240, 214, 155, .5);
+  filter: blur(4px);
+  opacity: 0;
+}
+
+/* A landing ring on the cart button, separate from the badge's own pop. */
+.site-cart-arrival::after {
+  position: absolute;
+  inset: -3px;
+  border: 1.5px solid rgba(198, 161, 91, .85);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-cart-arrival::after { animation: cart-arrival-ring 950ms cubic-bezier(.22, 1, .36, 1) both; }
+}
+
+@keyframes cart-arrival-ring {
+  0% { opacity: .9; transform: scale(.72); }
+  70% { opacity: .35; }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 6. Route curtain: a thin gold band sweeps the viewport when the page
+ *    changes. Rendered only while it animates, and never under reduced
+ *    motion. It cannot intercept input.
+ * ---------------------------------------------------------------- */
+.route-curtain {
+  position: fixed;
+  z-index: 76;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.route-curtain__band {
+  position: absolute;
+  inset: -12% -30%;
+  background: linear-gradient(102deg, transparent 38%, rgba(240, 214, 155, .16) 48%, rgba(255, 246, 226, .26) 52%, transparent 62%);
+  opacity: 0;
+  transform: translate3d(-60%, 0, 0) skewX(-9deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .route-curtain__band { animation: route-curtain-sweep 820ms cubic-bezier(.36, .07, .19, .97) both; }
+}
+@keyframes route-curtain-sweep {
+  0% { opacity: 0; transform: translate3d(-62%, 0, 0) skewX(-9deg); }
+  26% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(62%, 0, 0) skewX(-9deg); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 7. Toast choreography: spring in, settle, then a thin bar showing how
+ *    long the message stays. The message text itself never moves.
+ * ---------------------------------------------------------------- */
+.toast-spring { transform-origin: 50% 100%; }
+.toast-progress {
+  position: absolute;
+  right: 14px;
+  bottom: 7px;
+  left: 14px;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(250, 246, 237, .18);
+  pointer-events: none;
+}
+.toast-progress__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #c6a15b, #f0d69b);
+  transform-origin: left center;
+}
+.toast-icon { transform-origin: 50% 60%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast-spring { animation: toast-spring 720ms cubic-bezier(.18, 1.32, .36, 1) both; }
+  .toast-icon { animation: toast-icon-pop 800ms cubic-bezier(.2, 1.5, .4, 1) 120ms both; }
+  .toast-progress__fill { animation: toast-progress var(--toast-life, 3400ms) linear both; }
+  html[data-ambient-motion="paused"] .toast-progress__fill { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast-progress { display: none; }
+}
+
+@keyframes toast-spring {
+  0% { opacity: 0; transform: translate3d(0, 26px, 0) scale(.94); }
+  62% { opacity: 1; transform: translate3d(0, -4px, 0) scale(1.012); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes toast-icon-pop {
+  0% { transform: scale(.6) rotate(-9deg); }
+  58% { transform: scale(1.14) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 8. Control feedback: a magnetic glow that follows the pointer inside
+ *    a button and a press ripple. Both live in pseudo/child layers, so
+ *    the button's own box and hit area never move.
+ * ---------------------------------------------------------------- */
+.motion-cta__glow {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 250, 236, .3), transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--glow-x, 50%), var(--glow-y, 50%), 0) translate(-50%, -50%);
+}
+/* The ripple is clipped by the button's own pill; its box never changes. */
+.m3-button:not(.m3-icon-button) {
+  position: relative;
+  overflow: hidden;
+}
+.press-ripple {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  background: rgba(255, 250, 236, .34);
+  opacity: 0;
+  pointer-events: none;
+}
+.press-ripple--ink { background: rgba(124, 33, 40, .18); }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .motion-cta__glow { transition: opacity 340ms ease; }
+  .motion-cta:hover .motion-cta__glow,
+  .motion-cta:focus-visible .motion-cta__glow { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-cta__glow { display: none; }
+}
+
+/* ---------------------------------------------------------------- *
+ * 9. Counting numbers: tabular so digits do not shift the layout while
+ *    they run. The accessible value sits in a sibling `sr-only` node.
+ * ---------------------------------------------------------------- */
+.count-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .count-value { animation: count-tick 420ms cubic-bezier(.34, 1.45, .5, 1) both; }
+}
+@keyframes count-tick {
+  from { opacity: .72; transform: translate3d(0, 3px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 10. Tilted artwork: only the picture leans toward the pointer. The
+ *     card's stretched button and its siblings stay exactly in place.
+ * ---------------------------------------------------------------- */
+.tilt-art {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tilt-art { transition: transform 560ms cubic-bezier(.16, .84, .44, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tilt-art { transform: none !important; }
+}
+
+/* ---------------------------------------------------------------- *
+ * 11. Staggered arrival for lists and grids. The container sets the
+ *     index; each child waits its turn without changing its box.
+ * ---------------------------------------------------------------- */
+.stagger-item { --stagger-index: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .stagger-item.is-visible { animation: stagger-in 920ms cubic-bezier(.65, .02, .2, 1) both; animation-delay: calc(var(--stagger-index) * 90ms); }
+  /* For lists that arrive with their data rather than with the scroll position. */
+  .stagger-in { animation: stagger-in 840ms cubic-bezier(.65, .02, .2, 1) both; animation-delay: calc(var(--stagger-index, 0) * 85ms); }
+}
+/* Paper settle: a sheet laid onto the table, tipping flat as it lands. */
+@keyframes stagger-in {
+  from { opacity: .3; transform: translate3d(0, 20px, 0) rotate(.8deg) scale(.99); }
+  62% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------- *
+ * 12. Waiting shimmer for messages shown while the online menu loads.
+ * ---------------------------------------------------------------- */
+.shimmer-pill {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-pill::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 32%, rgba(255, 250, 236, .22) 50%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-100%);
+  content: "";
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer-pill::after { animation: shimmer-sweep 2.7s ease-in-out infinite; }
+  [data-motion-paused="true"] .shimmer-pill::after,
+  html[data-ambient-motion="paused"] .shimmer-pill::after { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-pill::after { display: none; }
+}
+@keyframes shimmer-sweep {
+  0% { opacity: 0; transform: translateX(-100%); }
+  22% { opacity: 1; }
+  78% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 13. Banner sweep: one gold pass across a dark banner when it arrives,
+ *     plus a slow breathing glow behind it. The sweep runs once.
+ * ---------------------------------------------------------------- */
+.banner-sweep {
+  position: absolute;
+  z-index: 0;
+  inset: -20% -40%;
+  background: linear-gradient(96deg, transparent 42%, rgba(240, 214, 155, .12) 50%, transparent 58%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-46%, 0, 0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.is-visible .banner-sweep { animation: banner-sweep-pass 1.9s cubic-bezier(.3, .7, .2, 1) 160ms both; }
+  .banner-glow > span { animation: banner-glow-breathe 13.5s ease-in-out infinite alternate; }
+  [data-motion-paused="true"] .banner-glow > span,
+  html[data-ambient-motion="paused"] .banner-glow > span { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .banner-sweep,
+  .banner-glow { display: none; }
+}
+@keyframes banner-sweep-pass {
+  0% { opacity: 0; transform: translate3d(-46%, 0, 0); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(46%, 0, 0); }
+}
+@keyframes banner-glow-breathe {
+  from { opacity: .45; transform: scale(.96); }
+  to { opacity: .85; transform: scale(1.06); }
+}
+.banner-glow {
+  position: absolute;
+  z-index: 0;
+  inset: auto -10% -45% auto;
+  width: clamp(320px, 46vw, 680px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.banner-glow > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198, 161, 91, .18), rgba(124, 33, 40, .08) 44%, transparent 70%);
+}
+
+/* ---------------------------------------------------------------- *
+ * 14. Rail edges: horizontal scrollers fade at their ends and stop on
+ *     hover so a visitor can read a paused card.
+ * ---------------------------------------------------------------- */
+.rail-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+/* ---------------------------------------------------------------- *
+ * 15. Focus bloom: a soft halo behind the existing focus ring on the
+ *     header's icon buttons. It lives on a pseudo-element so the button's
+ *     own elevation shadow is never overwritten, and the 3px outline that
+ *     keyboard visitors rely on is unchanged.
+ * ---------------------------------------------------------------- */
+.site-nav-icon::before {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-nav-icon:focus-visible::before { animation: focus-bloom 800ms ease-out both; }
+}
+@keyframes focus-bloom {
+  0% { opacity: 1; box-shadow: 0 0 0 0 rgba(198, 161, 91, .55); }
+  100% { opacity: 1; box-shadow: 0 0 0 12px rgba(198, 161, 91, 0); }
+}
+
+/* ---------------------------------------------------------------- *
+ * 16. Entrance characters.
+ *     One shared fade-up made every surface read the same, so each
+ *     context now has its own signature: a focus-pull for lead copy,
+ *     a wipe for framed panels, a tip-up for cards, a side entry for
+ *     list rows, an overshoot settle for tiles, a tracking settle for
+ *     eyebrows and a breathing settle for photography. Each uses a
+ *     different curve from --ease-* below, and each fills `backwards`
+ *     so hover transforms own the element once the arrival finishes.
+ *     A tagged element that sits outside the reveal machinery (a panel
+ *     that is already on screen when the route lands) animates on mount
+ *     through the `:not(.reveal *)` arm of each rule below; inside a
+ *     reveal it waits for `.is-visible` like everything else.
+ * ---------------------------------------------------------------- */
+:root {
+  --ease-glide: cubic-bezier(.22, 1, .36, 1);
+  --ease-swift: cubic-bezier(.16, .84, .44, 1);
+  --ease-spring: cubic-bezier(.34, 1.45, .5, 1);
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-dramatic: cubic-bezier(.65, .02, .2, 1);
+  --ease-mask: cubic-bezier(.19, 1, .22, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* A: focus-pull — copy sharpens out of a soft blur as it settles. */
+  .anim-blur:not(.reveal *),
+  .reveal.is-visible .anim-blur,
+  .anim-blur.is-visible { animation: focus-pull 1.1s var(--ease-swift) backwards; }
+  /* B: clip-unveil — a left-to-right wipe with no movement at all. */
+  .anim-clip:not(.reveal *),
+  .reveal.is-visible .anim-clip,
+  .anim-clip.is-visible { animation: clip-unveil 1.05s var(--ease-dramatic) backwards; }
+  /* C: tilt-rise — the card tips up off the table, spring easing. */
+  .anim-tilt-rise:not(.reveal *),
+  .reveal.is-visible .anim-tilt-rise,
+  .anim-tilt-rise.is-visible { animation: tilt-rise 1s var(--ease-spring) backwards; }
+  /* D: slide-x — rows enter from the reading edge. */
+  .anim-slide-x:not(.reveal *),
+  .reveal.is-visible .anim-slide-x,
+  .anim-slide-x.is-visible { animation: slide-x-in 950ms var(--ease-swift) backwards; }
+  /* E: scale-settle — a soft overshoot, for tiles and panels. */
+  .anim-scale-settle:not(.reveal *),
+  .reveal.is-visible .anim-scale-settle,
+  .anim-scale-settle.is-visible { animation: scale-settle 900ms var(--ease-bounce) backwards; }
+  /* F: letter-settle — eyebrows tighten their tracking while appearing.
+        Only the `from` frame is given, so both properties interpolate to
+        whatever the element's own type scale defines. */
+  .anim-letters:not(.reveal *),
+  .reveal.is-visible .anim-letters,
+  .anim-letters.is-visible { animation: letter-settle 1.2s var(--ease-glide) backwards; }
+  /* G: ken-burns settle — photography exhales from a slight zoom. The
+        backwards fill hands the transform back to the hover zoom. */
+  .anim-kenburns:not(.reveal *),
+  .reveal.is-visible .anim-kenburns,
+  .anim-kenburns.is-visible { animation: kenburns-settle 1.6s var(--ease-swift) backwards; }
+  /* H: veil-drop — a status panel is uncovered top-down. Vertical wipes and
+        clip paths cannot widen a document, so this is the safe signature for
+        full-bleed panels that sit flush against a 320px viewport. */
+  .anim-veil:not(.reveal *),
+  .reveal.is-visible .anim-veil,
+  .anim-veil.is-visible { animation: veil-drop 1.15s var(--ease-mask) backwards; }
+}
+
+@keyframes focus-pull {
+  from { opacity: 0; filter: blur(9px); transform: translate3d(0, 10px, 0) scale(1.015); }
+}
+@keyframes clip-unveil {
+  from { opacity: .55; clip-path: inset(0 100% 0 0); }
+}
+@keyframes tilt-rise {
+  from { opacity: 0; transform: perspective(900px) rotateX(7deg) translate3d(0, 26px, 0); }
+}
+/* Enters from the reading-start edge: leftward overflow cannot widen an LTR
+   page, so this signature is safe at 320px while it runs. */
+@keyframes slide-x-in {
+  from { opacity: 0; transform: translate3d(-28px, 0, 0); }
+}
+@keyframes scale-settle {
+  from { opacity: 0; transform: scale(.93); }
+}
+/* Starts tighter than the type scale and opens into it: widening tracking can
+   never push a 320px line past the viewport this way. */
+@keyframes letter-settle {
+  from { opacity: 0; letter-spacing: .08em; }
+}
+@keyframes kenburns-settle {
+  from { transform: scale(1.12); }
+}
+/* Uncovers downward instead of moving, so a panel flush with the viewport edge
+   can never nudge the document wider while it arrives. */
+@keyframes veil-drop {
+  from { opacity: .35; clip-path: inset(0 0 100% 0); }
+}

@@ -1,0 +1,147 @@
+/* All effects in this layer are decorative and leave layout and hit targets
+   unchanged. Continuous effects are paused with the existing observers. */
+.home-hero__scent {
+  position: absolute;
+  top: 4%;
+  right: -8%;
+  width: min(76vw, 1050px);
+  height: 92%;
+  overflow: visible;
+  opacity: .78;
+  pointer-events: none;
+}
+.home-hero__scent-guide {
+  stroke: rgba(244, 207, 147, .16);
+  stroke-width: 1;
+}
+.home-hero__scent-trail {
+  stroke: url(#home-scent-gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 22 78;
+  stroke-dashoffset: 100;
+  opacity: .78;
+}
+@media (max-width: 639px) {
+  .home-hero__scent { top: 10%; right: -42%; width: 126%; height: 83%; opacity: .48; }
+}
+
+/* Accent strokes draw in under selected section-heading words, without
+   inserting anything into the document flow. */
+.section-head__accent { position: relative; }
+.section-head__accent::after {
+  position: absolute;
+  right: 0;
+  bottom: -.08em;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c6a15b 20%, #edce91 80%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  content: "";
+}
+
+/* A second, short orbit complements the existing plate halo. */
+.editorial-plate__well::after {
+  position: absolute;
+  z-index: 2;
+  inset: 2% -4%;
+  border: 1px solid transparent;
+  border-top-color: rgba(255, 225, 165, .95);
+  border-right-color: rgba(233, 181, 104, .72);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  content: "";
+}
+
+/* The drawn line reuses the selected food outline and shares the enlarged
+   photo's origin. It is inside the scene's pointer-transparent SVG. */
+
+/* A local light follows the pointer over food-card photographs only. */
+.food-card__spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(75%, 220px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 180, .6), rgba(255, 224, 158, .18) 38%, transparent 70%);
+  opacity: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* Counter-rotating arcs make page-banner ornaments feel like a place setting. */
+.page-ornament__arc {
+  border: 1px solid transparent;
+  border-top-color: rgba(232, 199, 139, .48);
+  border-right-color: rgba(232, 199, 139, .16);
+}
+.page-ornament__arc--outer { inset: 15%; }
+.page-ornament__arc--inner { inset: 31%; border-top-style: dashed; border-right-color: rgba(232, 199, 139, .28); }
+.page-ornament__arc::after {
+  position: absolute;
+  top: 8%;
+  left: 17%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e8c78b;
+  box-shadow: 0 0 10px rgba(232, 199, 139, .55);
+  content: "";
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero__scent-trail { animation: hero-aroma-travel 13.5s linear infinite; }
+  .home-hero__scent-trail--1 { animation-delay: -1.5s; }
+  .home-hero__scent-trail--2 { animation-duration: 14s; animation-delay: -5s; animation-direction: reverse; }
+  .home-hero__scent-trail--3 { animation-duration: 12s; animation-delay: -8s; }
+  .home-hero[data-motion-paused="true"] .home-hero__scent-trail { animation-play-state: paused; }
+
+  .reveal.is-visible .section-head__accent::after { animation: section-accent-draw 1.9s cubic-bezier(.16, .84, .44, 1) 210ms both; }
+  .editorial-category.is-selected .editorial-plate__well::after { animation: plate-orbit-swish 1.5s cubic-bezier(.2, .7, .2, 1) both; }
+
+  .page-ornament__arc--outer { animation: ornament-arc-outer 37s linear infinite; }
+  .page-ornament__arc--inner { animation: ornament-arc-inner 28s linear infinite; }
+  .page-ornament[data-motion-paused="true"] .page-ornament__arc { animation-play-state: paused; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .food-card__spotlight { transition: opacity 320ms ease; }
+  .food-card:hover .food-card__spotlight,
+  .food-card:focus-within .food-card__spotlight { opacity: .8; }
+}
+
+@keyframes hero-aroma-travel {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: -100; }
+}
+@keyframes section-accent-draw {
+  0% { opacity: 0; transform: scaleX(0); }
+  20% { opacity: .85; }
+  70% { opacity: .85; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(1); }
+}
+@keyframes plate-orbit-swish {
+  0% { opacity: 0; transform: rotate(-85deg) scale(.82); }
+  28% { opacity: .9; }
+  100% { opacity: 0; transform: rotate(70deg) scale(1.08); }
+}
+
+@keyframes ornament-arc-outer {
+  from { transform: rotate(-25deg) scaleX(.86); }
+  to { transform: rotate(335deg) scaleX(.86); }
+}
+@keyframes ornament-arc-inner {
+  from { transform: rotate(30deg) scaleY(.84); }
+  to { transform: rotate(-330deg) scaleY(.84); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__scent,
+  .food-card__spotlight,
+  .page-ornament__arc { display: none; }
+}

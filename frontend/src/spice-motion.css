@@ -1,0 +1,166 @@
+/* Illustrated spice shapes are decorative overlays, not a new hero layout. */
+.hero-spices {
+  position: absolute;
+  top: 50%;
+  right: -2%;
+  width: clamp(480px, 58vw, 820px);
+  height: auto;
+  overflow: hidden;
+  color: #e8c58a;
+  opacity: .72;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.hero-spices__guide { opacity: .25; }
+.hero-spices__thread {
+  stroke: #f4d49b;
+  stroke-width: 2.5;
+  stroke-dasharray: 15 85;
+  opacity: .9;
+}
+.hero-spices__anise,
+.hero-spices__leaf,
+.hero-spices__chilli,
+.hero-spices__twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* The banner motif sits inside the existing place-setting ornament. */
+.page-ornament__spice {
+  position: absolute;
+  top: 24%;
+  left: 24%;
+  width: 52%;
+  height: 52%;
+  color: #e8c78b;
+  opacity: .58;
+  pointer-events: none;
+}
+.page-ornament__spice-anise {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Selection sparkles are drawn above the artwork but never receive input. */
+.editorial-plate__spark {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.editorial-plate__sparks {
+  position: absolute;
+  z-index: 2;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  overflow: visible;
+  color: #ffe3a3;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  filter: drop-shadow(0 1px 1px rgba(50, 22, 12, .65));
+  pointer-events: none;
+}
+
+@media (max-width: 639px) {
+  .hero-spices {
+    top: 47%;
+    right: -36%;
+    width: 127%;
+    opacity: .45;
+    /* Keep the busier artwork away from small-screen body copy. */
+    -webkit-mask-image: linear-gradient(90deg, transparent 18%, rgba(0, 0, 0, .2) 44%, #000 76%);
+    mask-image: linear-gradient(90deg, transparent 18%, rgba(0, 0, 0, .2) 44%, #000 76%);
+  }
+  /* Keep a glimpse of the motif inside the edge of narrow page banners. */
+  .page-ornament__spice { left: 20%; opacity: .5; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-spices__thread { animation: spice-thread-travel 15s linear infinite; }
+  .hero-spices__anise { animation: spice-anise-float 17s ease-in-out infinite alternate; }
+  .hero-spices__leaf { animation: spice-leaf-float 13.5s ease-in-out infinite alternate; }
+  .hero-spices__chilli { animation: spice-chilli-float 16s ease-in-out infinite alternate; }
+  .hero-spices__twinkle { animation: spice-twinkle 6s ease-in-out infinite alternate; }
+  .hero-spices__twinkle--second { animation-delay: -2.4s; }
+  .home-hero[data-motion-paused="true"] .hero-spices__animated { animation-play-state: paused; }
+
+  .page-ornament__spice { animation: spice-banner-turn 56s linear infinite; }
+  .page-ornament__spice-anise { animation: spice-banner-counterturn 46s linear infinite; }
+  .page-ornament[data-motion-paused="true"] .page-ornament__spice,
+  .page-ornament[data-motion-paused="true"] .page-ornament__spice-anise { animation-play-state: paused; }
+
+  .editorial-plate__spark { animation: spice-spark 1.45s cubic-bezier(.2, .65, .25, 1) both; }
+  .editorial-plate__spark--second { animation-delay: 90ms; }
+  .editorial-plate__spark--third { animation-delay: 180ms; }
+  .editorial-plate__spark--fourth { animation-delay: 120ms; }
+}
+
+@keyframes spice-thread-travel {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: -100; }
+}
+@keyframes spice-anise-float {
+  from { transform: translateY(3px) rotate(-6deg); }
+  to { transform: translateY(-9px) rotate(8deg); }
+}
+@keyframes spice-leaf-float {
+  from { transform: translateY(4px) rotate(-5deg); }
+  to { transform: translateY(-7px) rotate(7deg); }
+}
+@keyframes spice-chilli-float {
+  from { transform: translateY(-3px) rotate(5deg); }
+  to { transform: translateY(8px) rotate(-6deg); }
+}
+@keyframes spice-twinkle {
+  from { opacity: .3; transform: scale(.75); }
+  to { opacity: .9; transform: scale(1.15); }
+}
+@keyframes spice-banner-turn {
+  to { transform: rotate(360deg); }
+}
+@keyframes spice-banner-counterturn {
+  to { transform: rotate(-360deg); }
+}
+@keyframes spice-spark {
+  0% { opacity: 0; transform: scale(.3) rotate(-20deg); }
+  25%, 55% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.3) rotate(18deg); }
+}
+
+/* Keep the illustration as still artwork; remove fleeting selection effects. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-spices { opacity: .42; }
+  .hero-spices__thread,
+  .editorial-plate__sparks { display: none; }
+}
+
+/* Existing continuous details stop when their own sections leave the screen. */
+.home-hero[data-motion-paused="true"] .animate-pulse-dot,
+.home-marquee[data-motion-paused="true"] .animate-marquee,
+.tracking-map[data-motion-paused="true"] .tracking-map__pin--courier::after {
+  animation-play-state: paused;
+}
+
+/* A visitor can also pause automatic decoration from the footer. Short,
+   user-triggered selection feedback remains separate from ambient motion. */
+html[data-ambient-motion="paused"] .home-hero__photo,
+html[data-ambient-motion="paused"] .home-hero__glow > span,
+html[data-ambient-motion="paused"] .home-hero__ember,
+html[data-ambient-motion="paused"] .home-hero__title-line .gold-text,
+html[data-ambient-motion="paused"] .home-hero__scroll-rail::after,
+html[data-ambient-motion="paused"] .home-hero__scent-trail,
+html[data-ambient-motion="paused"] .hero-spices__animated,
+html[data-ambient-motion="paused"] .page-ornament__orbit,
+html[data-ambient-motion="paused"] .page-ornament__arc,
+html[data-ambient-motion="paused"] .page-ornament__spice,
+html[data-ambient-motion="paused"] .page-ornament__spice-anise,
+html[data-ambient-motion="paused"] .animate-marquee,
+html[data-ambient-motion="paused"] .animate-pulse-dot,
+html[data-ambient-motion="paused"] .tracking-map__pin--courier::after {
+  animation-play-state: paused !important;
+}
+html[data-ambient-motion="paused"] .home-hero__glow { transform: none !important; transition: none !important; }
