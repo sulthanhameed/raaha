@@ -1,31 +1,22 @@
 {
-  "name": "react-vite-tailwind",
+  "name": "raaha",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Monorepo orchestrator for the Raaha restaurant project: frontend/, backend/ and database/ packages.",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "clsx": "2.1.1",
-    "leaflet": "^1.9.4",
-    "lucide-react": "^1.71.0",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
-    "tailwind-merge": "3.4.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/vite": "4.1.17",
-    "@types/leaflet": "^1.9.22",
-    "@types/node": "22.19.17",
-    "@types/react": "19.2.7",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "5.1.1",
-    "tailwindcss": "4.1.17",
-    "typescript": "5.9.3",
-    "vite": "7.3.2",
-    "vite-plugin-singlefile": "2.3.0"
+    "dev": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "typecheck": "npm --prefix frontend run typecheck",
+    "check:cutouts": "npm --prefix frontend run check:cutouts",
+    "test:e2e": "npm --prefix frontend run test:e2e",
+    "test:backend": "npm --prefix frontend run test:backend",
+    "test:captcha": "npm --prefix frontend run test:captcha",
+    "test:server": "npm --prefix backend run test",
+    "test:db": "npm --prefix database run test",
+    "package:hosting": "sh scripts/package-hosting.sh",
+    "install:all": "npm --prefix frontend ci && npm --prefix backend ci && npm --prefix database ci"
   }
 }

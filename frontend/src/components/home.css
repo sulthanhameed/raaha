@@ -1,0 +1,38 @@
+/* Keep the restored signature cards' add actions easy to tap. */
+.home-signatures .food-card button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Keep home map controls easy to tap and provide a neutral backdrop if the
+   external map cannot load. The backdrop is not intended to depict streets. */
+.home-visit__map [aria-label="Map layer"] button,
+.home-visit__map > div > .reveal:nth-child(2) > div:nth-child(2) button {
+  min-height: 44px;
+}
+.home-visit__map button[aria-label="Zoom in"],
+.home-visit__map button[aria-label="Zoom out"] {
+  width: 48px;
+  height: 48px;
+}
+.home-visit__map > div > .reveal:first-child {
+  background: #e8e2d7;
+}
+.home-visit__map > div > .reveal:first-child::before {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 40px 60px;
+  background:
+    linear-gradient(28deg, transparent 40%, rgba(255, 253, 248, .6) 40.2%, rgba(255, 253, 248, .6) 41%, transparent 41.2%),
+    linear-gradient(115deg, transparent 51%, rgba(255, 253, 248, .65) 51.2%, rgba(255, 253, 248, .65) 52%, transparent 52.2%),
+    #e8e2d7;
+  color: #665c50;
+  content: "Open Maps for directions";
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-align: center;
+  text-transform: uppercase;
+}

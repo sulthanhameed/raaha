@@ -1,0 +1,21 @@
+{
+  "name": "raaha-database",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Supabase migrations, RLS checks and read-only MCP configuration for Raaha. Applies nothing by itself.",
+  "scripts": {
+    "test": "node --test scripts/test-supabase.mjs scripts/test-orders-payments.mjs",
+    "login": "supabase login",
+    "link": "supabase link --project-ref jrfmgqccicrpdtqztrpt",
+    "push:dry-run": "supabase db push --remote --dry-run",
+    "push": "supabase db push --remote"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.17",
+    "supabase": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

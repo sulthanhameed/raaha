@@ -1,0 +1,768 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces Variable", "Playfair Display", Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-system, system-ui, sans-serif;
+
+  --color-ink: #171208;
+  --color-coal: #211809;
+  --color-coal2: #2b2010;
+  --color-paper: #faf6ed;
+  --color-cream: #f4ecdb;
+  --color-sand: #e7d9bd;
+  --color-linen: #efe6d2;
+  --color-gold: #c6a15b;
+  --color-goldsoft: #dcc084;
+  --color-golddeep: #775021;
+  --color-maroon: #7c2128;
+  --color-leaf: #3e7d3a;
+
+  --shadow-lux: 0 24px 60px -24px rgba(23, 18, 8, 0.35);
+  --shadow-card: 0 10px 34px -14px rgba(23, 18, 8, 0.28);
+  --shadow-pop: 0 32px 80px -20px rgba(23, 18, 8, 0.5);
+
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-fade-up: fadeUp 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+  --animate-pop-in: popIn 0.6s cubic-bezier(0.34, 1.45, 0.5, 1) both;
+  --animate-sheet-up: sheetUp 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fadeIn 0.5s ease both;
+  --animate-pulse-dot: pulseDot 2.5s ease-in-out infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(26px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes sheetUp {
+    from { opacity: 0; transform: translateY(48px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(94, 178, 92, 0.55); }
+    50% { box-shadow: 0 0 0 6px rgba(94, 178, 92, 0); }
+  }
+
+  
+  
+  
+  
+  
+  
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+#dish-reviews { scroll-margin-top: calc(var(--site-header-height) + 12px); }
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #c6a15b;
+  color: #171208;
+}
+
+/* Luxury eyebrow label */
+.lux-label {
+  @apply text-[11px] font-bold uppercase;
+  letter-spacing: 0.42em;
+}
+
+.lux-label-sm {
+  @apply text-[10px] font-bold uppercase;
+  letter-spacing: 0.32em;
+}
+
+.gold-text {
+  background: linear-gradient(105deg, #a37f36 0%, #e9cf8f 38%, #c6a15b 62%, #8f6f2a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent, rgba(198, 161, 91, 0.65), transparent);
+  height: 1px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.15s cubic-bezier(0.16, 0.84, 0.44, 1), transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hide scrollbars for horizontal rails */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Elegant thin scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #efe6d2; }
+::-webkit-scrollbar-thumb { background: #c9b183; border-radius: 8px; border: 2px solid #efe6d2; }
+::-webkit-scrollbar-thumb:hover { background: #9a7a33; }
+
+/* Focus visibility for accessibility */
+:focus-visible {
+  outline: 2px solid #9a7a33;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Image treatment */
+.img-warm {
+  filter: saturate(1.06) contrast(1.03);
+}
+
+/* Dotted pattern for dark bands */
+.dot-grid {
+  background-image: radial-gradient(rgba(198, 161, 91, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Material 3 style filled tonal input */
+.m3-input {
+  @apply w-full rounded-2xl bg-linen/70 px-4 py-3.5 text-[15px] font-medium text-ink placeholder:text-ink/40 border border-transparent transition-all duration-300;
+}
+.m3-input:hover { @apply bg-linen; }
+.m3-input:focus {
+  @apply bg-white border-gold/60 outline-none ring-4 ring-gold/15;
+}
+/* Native date/time controls can otherwise force a narrow reservation form wider. */
+.reserve-form .m3-input { min-width: 0; max-width: 100%; }
+.reserve-form .reserve-form__select { padding-right: 2.75rem; padding-left: 2.75rem; }
+
+/* The fixed navigation has two rows on phones and one on larger screens. */
+:root { --site-header-height: 144px; }
+@media (min-width: 768px) {
+  :root { --site-header-height: 100px; }
+}
+
+/* The category dish page follows the reference's tabletop typography and food placement. */
+/* Wide food categories use the reference table with its five empty bowls;
+   beverages and narrower screens keep the bare tabletop. */
+/* On wide screens the brand mock's five place settings set the dish order:
+   left, middle, top-right, right and front-centre, extras on bare wood. */
+@media (min-width: 1101px) {
+  /* Front pair wear their names underneath, like the reference. */
+}
+
+/* The menu page table photograph fills the website edge to edge: phones keep
+   its own ratio, wider screens cover the whole screen and pan vertically. */
+/* Category navigation remains underneath the complete photograph. */
+.table-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+/* Selection information is positioned next to its plate on both tables. */
+/* From tablets up the stage is the website's full screen; the portrait
+   photograph covers it and a vertical band stays visible. */
+
+/* The photograph's own rectangle inside the stage: full width, its natural
+   ratio, shifted by the pan. Plate targets and the enlargement clip live here
+   so they stay glued to the food at every crop. Where the stage keeps the
+   photograph's ratio (phones) the rectangle is exactly the stage. */
+/* Plates outside the visible band stay reachable from the list and the
+   selection card's arrows, but must not sit invisibly in the tab order. */
+/* While the whole photograph is on show it sits centred at the stage's full
+   height; the photograph's own blurred body fills the screen beside it. */
+/* The pan glides between bands; reduced motion jumps straight to the plate. */
+
+/* The selected object is clipped from the same photo, not a replacement
+   image. Leave interaction to the stable, unscaled buttons above the photo. */
+@media (prefers-reduced-motion: no-preference) {
+  
+}
+.table-panel { width: min(100%, 720px); min-width: 0; margin-inline: auto; padding: 32px clamp(20px, 4vw, 40px) 12px; }
+.table-panel__eyebrow { color: #dfbd83; font-size: 10px; font-weight: 700; letter-spacing: .2em; line-height: 1.5; }
+.table-panel > h2 {
+  margin-top: 15px;
+  font-family: "Fraunces Variable", Georgia, serif;
+  font-size: clamp(38px, 3.7vw, 58px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+.table-panel > h2 em { color: #d9b577; font-weight: 500; }
+.table-panel__intro { max-width: 550px; margin-top: 16px; color: rgba(255, 250, 242, .68); font-size: 15px; line-height: 1.65; }
+/* Geometry (photo rectangle + pan) comes from .table-fit; only the stacking
+   context is owned here. */
+/* Transparent buttons remain over the original plate locations, providing
+   stable touch, keyboard and screen-reader interaction as the photo grows. */
+.table-selection.is-collapsed,
+.table-selection.is-positioning { visibility: hidden; }
+.table-selection::before {
+  position: absolute;
+  z-index: 0;
+  display: none;
+  width: 10px;
+  height: 10px;
+  background: rgba(31,19,12,.94);
+  content: "";
+}
+.table-selection[data-anchored="true"]::before { display: block; }
+.table-selection[data-placement="right"]::before { top: var(--dish-pointer); left: -5px; transform: translateY(-50%) rotate(45deg); }
+.table-selection[data-placement="left"]::before { top: var(--dish-pointer); right: -5px; transform: translateY(-50%) rotate(45deg); }
+.table-selection[data-placement="above"]::before { bottom: -5px; left: var(--dish-pointer); transform: translateX(-50%) rotate(45deg); }
+.table-selection[data-placement="below"]::before { top: -5px; left: var(--dish-pointer); transform: translateX(-50%) rotate(45deg); }
+.table-selection button { pointer-events: auto; }
+.table-selection__content { position: relative; z-index: 1; min-height: 44px; padding-right: 38px; }
+.table-selection h2 { overflow-wrap: anywhere; color: #fffaf2; font-size: clamp(14px, 1.8vw, 17px); font-weight: 700; line-height: 1.08; text-transform: uppercase; }
+.table-selection__meta { display: inline-block; margin-top: 4px; color: #dfbd83; font-size: 13px; font-weight: 700; }
+.table-selection__close { position: absolute; z-index: 2; top: 1px; right: 1px; display: grid; width: 44px; height: 44px; place-items: center; border: 0; border-radius: 50%; color: #fff; }
+.table-selection__close:hover { background: rgba(255,255,255,.12); }
+.table-selection__actions { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; margin-top: 3px; }
+.table-selection__view { display: flex; min-width: 0; min-height: 44px; flex: 1; align-items: center; gap: 3px; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.table-selection__view svg { flex: none; }
+.table-selection__view:hover { color: #dfbd83; }
+.table-selection__controls { display: flex; flex: none; align-items: center; }
+.table-selection__controls button { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; color: #fff; }
+.table-selection__controls button:hover { background: rgba(255,255,255,.12); }
+.table-selection__reopen {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  width: max-content;
+  max-width: calc(100vw - 16px);
+  min-height: 44px;
+  align-items: center;
+  gap: 5px;
+  visibility: hidden;
+  border-radius: 999px;
+  background: rgba(31,19,12,.84);
+  padding: 0 14px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.table-selection__reopen.is-visible { visibility: visible; }
+
+/* Previous/next menu choices follow the table instead of occupying its side. */
+
+@media (max-width: 900px) {
+  .table-panel { padding: 30px clamp(20px, 6vw, 48px) 45px; }
+}
+@media (max-width: 500px) {
+  /* Phones keep the whole portrait photograph at full width, uncropped. */
+  .table-panel > h2 { font-size: 38px; }
+  /* Lead the card with its button row so the edge nearest a plate is plain
+     text: every neighbouring plate centre stays tappable while the card
+     hugs its own plate. The close button keeps its corner clear. */
+  .table-panel__intro { font-size: 14px; }
+}
+
+/* Shared red-and-cream category spread for the home and menu pages. */
+/* Category artwork uses the complete transparent dish, never a black frame. */
+.editorial-plate {
+  display: block;
+  aspect-ratio: 1.3 / 1;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.editorial-plate__well { display: block; width: 100%; height: 100%; }
+.editorial-plate__well img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 8px rgba(25, 12, 9, 0.3));
+  transition: transform 500ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.editorial-plate:hover .editorial-plate__well img,
+.editorial-plate:focus-visible .editorial-plate__well img { transform: scale(1.04); }
+.editorial-surface { background: #faf6ed; }
+.editorial-surface__wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: #b11f27;
+  pointer-events: none;
+}
+.editorial-surface__texture {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(36, 19, 11, 0.15) 0.45px, transparent 0.7px);
+  background-size: 7px 7px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.editorial-category-heading {
+  display: flex;
+  min-height: 230px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6%;
+  padding: 32px 0 20px;
+}
+.editorial-category-heading__copy { width: min(42%, 500px); flex-shrink: 0; }
+.editorial-category-heading__title {
+  margin-top: 11px;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.7vw, 66px);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.editorial-category-heading__description {
+  max-width: 32ch;
+  margin-top: 11px;
+  color: rgba(23, 18, 8, 0.68);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.editorial-category-heading__aside { width: 35%; color: #fff8ef; text-align: right; }
+.editorial-list { margin: 0; padding: 0 0 8px; list-style: none; }
+.editorial-category { position: relative; min-height: clamp(144px, 12vw, 175px); }
+.editorial-category__plate {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: clamp(135px, 13vw, 175px);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 550ms cubic-bezier(0.2, 0.75, 0.2, 1), box-shadow 550ms ease;
+}
+.editorial-category:nth-child(8n + 1) .editorial-category__plate { left: 46%; width: clamp(125px, 12.5vw, 165px); }
+.editorial-category:nth-child(8n + 2) .editorial-category__plate { left: 59%; width: clamp(125px, 12vw, 155px); }
+.editorial-category:nth-child(8n + 3) .editorial-category__plate { left: 38%; width: clamp(150px, 15vw, 195px); }
+.editorial-category:nth-child(8n + 4) .editorial-category__plate { left: 57%; width: clamp(128px, 12.8vw, 165px); }
+.editorial-category:nth-child(8n + 5) .editorial-category__plate { left: 45%; width: clamp(150px, 15vw, 195px); }
+.editorial-category:nth-child(8n + 6) .editorial-category__plate { left: 60%; width: clamp(135px, 13vw, 175px); }
+.editorial-category:nth-child(8n + 7) .editorial-category__plate { left: 40%; width: clamp(148px, 15vw, 195px); }
+.editorial-category:nth-child(8n + 8) .editorial-category__plate { left: 56%; width: clamp(130px, 12vw, 162px); }
+.editorial-category__plate:hover,
+.editorial-category__plate:focus-visible {
+  transform: translate(-50%, -50%) rotate(-4deg) scale(1.045);
+}
+.editorial-category__plate:focus-visible { outline: 3px solid #e7c989; outline-offset: 6px; }
+.editorial-category__index {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 3%;
+  color: #211b16;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  opacity: 0.65;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.editorial-category--right .editorial-category__index { right: 3%; left: auto; color: #fff8ef; }
+.editorial-category.is-selected .editorial-category__index { opacity: 0; }
+.editorial-category.is-selected .editorial-category__plate { transform: translate(-50%, -50%) scale(1.045); }
+.editorial-category__detail {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 3%;
+  width: 29%;
+  color: #211b16;
+  animation: editorial-detail-in 640ms cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+.editorial-category--left .editorial-category__detail { animation-name: editorial-detail-in-left; }
+.editorial-category--right .editorial-category__detail { right: 3%; left: auto; color: #fff8ef; }
+/* The View Menu action sits just below the revealed category's band. */
+.editorial-category__view {
+  position: relative;
+  z-index: 2;
+  margin: 0 3% 16px auto;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  width: fit-content;
+  border: 0;
+  background: none;
+  color: #fff8ef;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.editorial-category--left .editorial-category__view { margin-inline: 3% auto; color: #211b16; }
+.editorial-category__view > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+  white-space: nowrap;
+}
+.editorial-category__view svg { flex: none; transition: transform 200ms ease; }
+.editorial-category__view:hover svg { transform: translate(2px, -2px); }
+.editorial-category__view:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+@media (max-width: 639px) {
+  .editorial-category__view { margin-inline: auto; }
+}
+
+/* Menu page dish showcase: a calm cream section under the category wave. */
+.menu-dishes { background: #f6efe3; color: #211b16; padding: 46px 0 58px; }
+.menu-dishes__inner { margin: 0 auto; max-width: 1180px; padding: 0 20px; }
+.menu-dishes__eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #7c1622;
+}
+.menu-dishes__title {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+.menu-dishes__title em { color: #7c1622; }
+.menu-dishes__count { margin-top: 6px; font-size: 12px; font-weight: 700; opacity: 0.72; }
+.menu-dishes__list {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 18px;
+}
+.menu-dishes__list button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff8ef;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 12px 28px -18px rgba(23, 18, 8, 0.45);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.menu-dishes__list button:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -18px rgba(23, 18, 8, 0.5); }
+.menu-dishes__list button:focus-visible { outline: 2px solid #7c1622; outline-offset: 3px; }
+.menu-dishes__plate { display: block; aspect-ratio: 4 / 3; background: #eadfce; }
+.menu-dishes__plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.menu-dishes__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px 13px;
+}
+.menu-dishes__name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.menu-dishes__price { flex: none; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.editorial-category__detail-number { font-size: 10px; font-weight: 800; letter-spacing: 0.18em; opacity: 0.7; }
+.editorial-category__detail-title {
+  margin-top: 7px;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 35px);
+  font-weight: 500;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 6px; font-size: 12px; font-weight: 700; }
+@keyframes editorial-detail-in {
+  from { transform: translate(20px, -50%); }
+  to { transform: translate(0, -50%); }
+}
+@keyframes editorial-detail-in-left {
+  from { transform: translate(-20px, -50%); }
+  to { transform: translate(0, -50%); }
+}
+.editorial-surface__end > p { max-width: 40%; }
+.editorial-surface__end > span { max-width: 35%; text-align: right; }
+
+@media (max-width: 639px) {
+  .editorial-category-heading { min-height: 225px; gap: 4%; padding: 25px 0 12px; }
+  .editorial-category-heading__copy { width: 43%; }
+  .editorial-category-heading__aside { width: 37%; }
+  .editorial-category-heading__title { margin-top: 9px; font-size: clamp(28px, 7vw, 38px); line-height: 1.08; }
+  .editorial-category-heading__description { margin-top: 9px; font-size: 11px; line-height: 1.4; }
+  .editorial-category { min-height: clamp(140px, 36vw, 158px); }
+  .editorial-category__plate,
+  .editorial-category:nth-child(8n + 1) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 2) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 3) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 4) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 5) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 6) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 7) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 8) .editorial-category__plate { width: clamp(106px, 32vw, 140px); }
+  .editorial-category:nth-child(8n + 3) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 5) .editorial-category__plate,
+  .editorial-category:nth-child(8n + 7) .editorial-category__plate { width: clamp(114px, 35vw, 150px); }
+  .editorial-category__index { left: 2%; font-size: 9px; }
+  .editorial-category--right .editorial-category__index { right: 2%; left: auto; }
+  .editorial-category__detail { left: 2%; width: 31%; }
+  .editorial-category--right .editorial-category__detail { right: 2%; left: auto; }
+  .editorial-category__detail-number { font-size: 9px; }
+  .editorial-category__detail-title { margin-top: 5px; font-size: clamp(16px, 4.5vw, 21px); }
+  .editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 4px; font-size: 10px; }
+}
+
+/* The menu keeps the home page's artwork and wave, in a shorter spread. */
+.editorial-surface--menu .editorial-category-heading {
+  min-height: 165px;
+  padding: 20px 0 12px;
+}
+.editorial-surface--menu .editorial-category-heading__title { font-size: clamp(28px, 4vw, 52px); }
+.editorial-surface--menu .editorial-category-heading__aside > span:first-child { font-size: clamp(3.25rem, 8vw, 7rem); }
+.editorial-surface--home { --band: clamp(144px, 12vw, 175px); }
+.editorial-surface--menu { --band: clamp(120px, 9vw, 138px); }
+.editorial-surface--menu .editorial-category { min-height: var(--band); }
+/* The revealed dish list flows below the band on both surfaces; flow-root
+   keeps its margin inside the row instead of collapsing out through the list
+   item, and plate/detail stay pinned to the original band instead of
+   drifting to the taller row's centre. */
+.editorial-surface--home .editorial-category,
+.editorial-surface--menu .editorial-category { display: flow-root; }
+.editorial-surface--home .editorial-category__plate,
+.editorial-surface--home .editorial-category__detail,
+.editorial-surface--menu .editorial-category__plate,
+.editorial-surface--menu .editorial-category__detail { top: calc(var(--band) / 2); }
+/* Give the longest category name a little more room without shrinking its plate. */
+.editorial-surface--menu .editorial-category:nth-child(8n + 6) .editorial-category__detail { width: 35%; }
+.editorial-surface--menu .editorial-category__detail-title { margin-top: 4px; font-size: clamp(20px, 2vw, 28px); }
+.editorial-surface--menu .editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 3px; }
+.editorial-surface--menu .editorial-surface__end { padding-block: 18px; }
+.editorial-surface--menu .editorial-surface__end > span { align-self: flex-start; transform: translateY(-12px); }
+
+/* Keep the wave aligned with the centered content on very wide screens. */
+@media (min-width: 1280px) {
+  .editorial-surface--menu::before {
+    position: absolute;
+    inset: 0 0 0 calc(50% + 640px);
+    background: #b11f27;
+    content: "";
+    pointer-events: none;
+  }
+  .editorial-surface--menu .editorial-surface__wave { left: 50%; width: 1280px; transform: translateX(-50%); }
+}
+@media (min-width: 640px) {
+  .editorial-surface--menu .editorial-category { min-height: clamp(128px, 10.5vw, 150px); }
+}
+/* The full-size plates can sit closer vertically when the stagger leaves them room. */
+@media (min-width: 1024px) {
+  .editorial-surface--menu .editorial-category:nth-child(8n + 4) .editorial-category__plate,
+  .editorial-surface--menu .editorial-category:nth-child(8n + 6) .editorial-category__plate { left: 61%; }
+}
+@media (max-width: 639px) {
+  .editorial-surface--menu .editorial-category__detail-title { font-size: clamp(16px, 4.1vw, 19px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .editorial-category__plate,
+  .editorial-plate__well img,
+  .editorial-category__detail button svg { transition: none; }
+  .editorial-category__detail,
+  .editorial-category--left .editorial-category__detail { animation: none; transform: translateY(-50%); }
+}
+
+/* The food list is separate from the canvas so the full table stays visible. */
+
+/* Delivery route preview: the map remains the main visual plane. */
+.tracking-hero {
+  position: relative;
+  overflow: hidden;
+  background: #171208;
+  padding: 48px clamp(20px, 5vw, 80px) 45px;
+}
+.tracking-hero::after {
+  position: absolute;
+  right: -5%;
+  bottom: -150px;
+  width: 450px;
+  height: 450px;
+  border: 1px solid rgba(198, 161, 91, 0.12);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+.tracking-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  max-width: 1280px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0 auto;
+}
+.tracking-hero__notice {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(198, 161, 91, 0.42);
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: #dcc084;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.tracking-layout { position: relative; background: #eee7d7; }
+.tracking-map { position: relative; width: 100%; height: 680px; background: #e7dfcc; }
+.tracking-map__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tracking-map .leaflet-container { background: #e7dfcc; font-family: "Manrope Variable", sans-serif; }
+.tracking-map .leaflet-tile { filter: saturate(0.65) sepia(0.1); }
+.tracking-map .leaflet-control-attribution { background: rgba(250, 246, 237, 0.9); color: #42392c; font-size: 10px; }
+.tracking-map .leaflet-control-zoom { overflow: hidden; border: 1px solid rgba(23, 18, 8, 0.12); border-radius: 14px; box-shadow: 0 10px 20px rgba(23, 18, 8, 0.16); }
+.tracking-map .leaflet-control-zoom a { width: 34px; height: 34px; border-color: rgba(23, 18, 8, 0.1); color: #171208; font: 600 19px/34px "Manrope Variable", sans-serif; }
+.tracking-map .leaflet-control-zoom a:hover { background: #f4ecdb; }
+.tracking-map__leaflet-icon { background: transparent; border: 0; }
+.tracking-map__pin {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 5px 18px rgba(23, 18, 8, 0.32);
+}
+.tracking-map__pin--origin { background: #171208; color: #dcc084; font: 700 23px "Fraunces Variable", Georgia, serif; }
+.tracking-map__pin--destination { width: 42px; height: 42px; background: #7c2128; color: #fff; }
+.tracking-map__pin--destination svg { width: 22px; height: 22px; }
+.tracking-map__pin--courier {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: #c6a15b;
+  color: #171208;
+  box-shadow: 0 7px 26px rgba(23, 18, 8, 0.45);
+}
+.tracking-map__pin--courier::after {
+  position: absolute;
+  inset: -9px;
+  border: 2px solid rgba(154, 122, 51, 0.5);
+  border-radius: 50%;
+  content: "";
+  animation: tracker-pulse 3s ease-out infinite;
+}
+.tracking-map__pin--courier svg { width: 27px; height: 27px; }
+.tracking-map__canvas.is-placing-pin { cursor: crosshair; }
+.tracking-map__error {
+  position: absolute;
+  z-index: 700;
+  right: 20px;
+  bottom: 52px;
+  max-width: 230px;
+  border-radius: 14px;
+  background: #171208;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 11px;
+}
+.tracking-layout__map-tools { position: absolute; z-index: 1000; top: 24px; right: 24px; display: flex; gap: 8px; }
+.tracking-layout__map-tools button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(23, 18, 8, 0.12);
+  border-radius: 999px;
+  background: rgba(250, 246, 237, 0.95);
+  padding: 12px 15px;
+  color: #171208;
+  box-shadow: 0 7px 20px rgba(23, 18, 8, 0.16);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  transition: transform 180ms ease, background 180ms ease;
+}
+.tracking-layout__map-tools button:hover { transform: translateY(-2px); background: #fff; }
+.tracking-panel {
+  position: absolute;
+  z-index: 900;
+  top: 24px;
+  bottom: 24px;
+  left: clamp(20px, 5vw, 76px);
+  width: min(390px, calc(100% - 40px));
+  overflow-y: auto;
+  border: 1px solid rgba(23, 18, 8, 0.06);
+  border-radius: 30px;
+  background: rgba(250, 246, 237, 0.97);
+  padding: 27px;
+  box-shadow: 0 24px 70px rgba(23, 18, 8, 0.24);
+  backdrop-filter: blur(16px);
+}
+.tracking-panel__demo { border: 1px solid rgba(124, 33, 40, 0.26); border-radius: 999px; padding: 6px 9px; color: #7c2128; font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.tracking-panel__range { height: 48px; appearance: none; background: transparent; cursor: pointer; }
+.tracking-panel__range::-webkit-slider-runnable-track { height: 7px; border-radius: 999px; background: #e7d9bd; }
+.tracking-panel__range::-moz-range-track { height: 7px; border-radius: 999px; background: #e7d9bd; }
+.tracking-panel__range::-webkit-slider-thumb { width: 20px; height: 20px; margin-top: -6.5px; appearance: none; border: 4px solid #fff; border-radius: 50%; background: #7c2128; box-shadow: 0 2px 8px rgba(23, 18, 8, 0.22); }
+.tracking-panel__range::-moz-range-thumb { width: 14px; height: 14px; border: 4px solid #fff; border-radius: 50%; background: #7c2128; box-shadow: 0 2px 8px rgba(23, 18, 8, 0.22); }
+.tracking-panel__primary { display: inline-flex; min-height: 42px; align-items: center; gap: 9px; border-radius: 999px; background: #171208; padding: 11px 18px; color: #faf6ed; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; transition: transform 180ms ease, background 180ms ease; }
+.tracking-panel__primary:hover { transform: translateY(-2px); background: #7c2128; }
+.tracking-panel__icon-btn { display: flex; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid rgba(23, 18, 8, 0.15); border-radius: 50%; color: #171208; }
+.tracking-panel__icon-btn:hover { background: #efe6d2; }
+.tracking-timeline { position: relative; margin: 22px 0 0 7px; padding: 0 0 0 23px; list-style: none; }
+.tracking-timeline::before { position: absolute; top: 7px; bottom: 9px; left: 0; width: 1px; background: #d2c4a7; content: ""; }
+.tracking-timeline__step { position: relative; padding: 0 0 13px; color: #5c514c; font-size: 12px; font-weight: 700; }
+.tracking-timeline__step:last-child { padding-bottom: 0; }
+.tracking-timeline__step.is-complete { color: #171208; }
+.tracking-timeline__step.is-current { color: #7c2128; }
+.tracking-timeline__dot { position: absolute; top: 0; left: -31px; display: flex; width: 16px; height: 16px; align-items: center; justify-content: center; border: 2px solid #cfc2a8; border-radius: 50%; background: #faf6ed; }
+.tracking-timeline__step.is-complete .tracking-timeline__dot { border-color: #c6a15b; background: #c6a15b; color: #171208; }
+.tracking-timeline__step.is-current .tracking-timeline__dot { border-color: #7c2128; background: #7c2128; box-shadow: 0 0 0 4px rgba(124, 33, 40, 0.12); }
+.tracking-panel__route { margin-top: 22px; border-top: 1px solid rgba(23, 18, 8, 0.13); padding-top: 18px; }
+.tracking-panel__route-dot { display: block; width: 11px; height: 11px; flex: none; margin-top: 4px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px rgba(23, 18, 8, 0.2); }
+.tracking-panel__tonal { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 7px; border: 1px solid rgba(23, 18, 8, 0.09); border-radius: 14px; background: #efe6d2; padding: 9px 8px; color: #171208; font-size: 10px; font-weight: 800; line-height: 1.15; }
+.tracking-panel__tonal:hover, .tracking-panel__tonal.is-active { background: #dcc084; }
+@keyframes tracker-pulse { from { transform: scale(0.65); opacity: 0.8; } to { transform: scale(1.4); opacity: 0; } }
+
+@media (max-width: 1023px) {
+  .tracking-layout { display: flex; flex-direction: column; }
+  .tracking-map { height: 430px; }
+  .tracking-panel { position: relative; top: auto; bottom: auto; left: auto; width: 100%; overflow: visible; border: 0; border-radius: 0; padding: 28px clamp(20px, 5vw, 60px) 36px; box-shadow: none; }
+  .tracking-layout__map-tools { top: 16px; right: 16px; }
+  .tracking-hero { padding: 40px 24px; }
+  .tracking-hero__inner { align-items: start; flex-direction: column; gap: 22px; }
+}
+
+@media (max-width: 600px) {
+  .tracking-map { height: 360px; }
+  .tracking-hero { padding: 34px 20px; }
+  .tracking-hero__notice { font-size: 9px; letter-spacing: 0.1em; }
+  .tracking-panel { padding: 27px 20px 34px; }
+  .tracking-layout__map-tools button { width: 40px; height: 40px; justify-content: center; padding: 0; }
+  .tracking-map__error { right: 10px; bottom: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tracking-map__pin--courier::after { animation: none; }
+  .tracking-layout__map-tools button,
+  .tracking-panel__primary { transition: none; }
+}
+
+/* Late overrides: base control/label rules further down the sheet must not
+   win against the wide-screen cluster. */

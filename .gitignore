@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.arena/
+*.local
+test-results/
+playwright-report/
+# Supabase/frontend configuration; the example contains no credentials.
+.env
+.env.*
+!.env.example
+# Regenerable source bundles: npm run package:hosting
+hosting-packages/
+
+# Scratch originals for the real-food photo conversion (converted webps live in frontend/public/images)
+image-search/

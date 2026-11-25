@@ -1,0 +1,228 @@
+/* Raaha's Material 3-inspired theme. Color roles are paired with their
+   corresponding on-colors; the warm palette keeps the restaurant identity. */
+:root {
+  --md-sys-color-primary: #7c2128;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #f9dcda;
+  --md-sys-color-on-primary-container: #471317;
+  --md-sys-color-secondary: #715b3a;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #f7e6c8;
+  --md-sys-color-on-secondary-container: #291c0a;
+  --md-sys-color-tertiary: #4e654b;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #d6eacc;
+  --md-sys-color-on-tertiary-container: #112011;
+  --md-sys-color-background: #faf6ed;
+  --md-sys-color-on-background: #211b16;
+  --md-sys-color-surface: #fff8f0;
+  --md-sys-color-on-surface: #211b16;
+  --md-sys-color-surface-container-lowest: #fffdf9;
+  --md-sys-color-surface-container-low: #fcf7f0;
+  --md-sys-color-surface-container: #f5ede3;
+  --md-sys-color-surface-container-high: #eee4d9;
+  --md-sys-color-surface-container-highest: #e8ddd1;
+  --md-sys-color-on-surface-variant: #5c514c;
+  --md-sys-color-outline: #82736b;
+  --md-sys-color-outline-variant: #d8c9bd;
+  --md-sys-color-inverse-surface: #2d241a;
+  --md-sys-color-inverse-on-surface: #fbf1e6;
+  --md-sys-color-inverse-primary: #f3b8b5;
+  --md-sys-color-error: #a41b1b;
+  --md-sys-color-on-error: #ffffff;
+
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 999px;
+  --md-sys-elevation-level1: 0 2px 8px rgba(52, 33, 23, .07), 0 1px 2px rgba(52, 33, 23, .05);
+  --md-sys-elevation-level2: 0 12px 32px rgba(52, 33, 23, .12), 0 2px 6px rgba(52, 33, 23, .06);
+  --md-sys-motion-standard: cubic-bezier(.2, 0, 0, 1);
+  /* Brand display faces sit alongside Material's functional body/label scale. */
+  --md-sys-typescale-display-large: 500 57px/64px "Fraunces Variable", Georgia, serif;
+  --md-sys-typescale-headline-large: 600 32px/40px "Fraunces Variable", Georgia, serif;
+  --md-sys-typescale-title-large: 600 22px/28px "Fraunces Variable", Georgia, serif;
+  --md-sys-typescale-body-large: 400 16px/24px "Manrope Variable", system-ui, sans-serif;
+  --md-sys-typescale-body-medium: 400 14px/20px "Manrope Variable", system-ui, sans-serif;
+  --md-sys-typescale-label-large: 700 14px/20px "Manrope Variable", system-ui, sans-serif;
+
+  /* Section-heading gold has a different accessible pairing on dark bands. */
+  --raaha-accent-deep: #775021;
+  --raaha-accent-light: #935d1e;
+}
+
+body {
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+}
+
+:where(.bg-ink, .home-hero, .home-services, .tracking-hero, footer) {
+  --raaha-accent-deep: #d1aa63;
+  --raaha-accent-light: #f0d49a;
+}
+
+.gold-text {
+  background-image: linear-gradient(105deg, var(--raaha-accent-deep), var(--raaha-accent-light) 45%, var(--raaha-accent-deep));
+}
+
+/* Brand overlines remain distinctive, but no longer rely on extreme tracking. */
+.lux-label { letter-spacing: .22em; }
+.lux-label-sm { letter-spacing: .18em; }
+
+:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
+}
+:where(.bg-ink, .home-hero, .home-services, .tracking-hero, footer) :focus-visible {
+  outline-color: #f7d99c;
+}
+
+/* Filled, tonal and outlined controls share a 48px touch target and state
+   treatment. Existing motion-cta shimmer remains a separate decoration. */
+.m3-button {
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid transparent;
+  border-radius: var(--md-sys-shape-corner-full);
+  padding: 12px 24px;
+  font: var(--md-sys-typescale-label-large);
+  letter-spacing: .01em;
+  text-align: center;
+  text-transform: none;
+  transition: background-color 180ms var(--md-sys-motion-standard), color 180ms var(--md-sys-motion-standard), box-shadow 180ms var(--md-sys-motion-standard), transform 180ms var(--md-sys-motion-standard);
+}
+.m3-button--filled { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); box-shadow: none; }
+.m3-button--filled:hover { background: #652027; box-shadow: var(--md-sys-elevation-level1); }
+.m3-button--tonal { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); box-shadow: none; }
+.m3-button--tonal:hover { background: #edd7b1; }
+.m3-button--outlined { border-color: var(--md-sys-color-outline); background: transparent; color: var(--md-sys-color-primary); box-shadow: none; }
+.m3-button--outlined:hover { background: rgba(124, 33, 40, .08); }
+.m3-button--inverse { background: #e7c589; color: #271c0d; box-shadow: none; }
+.m3-button--inverse:hover { background: #f1d59f; box-shadow: var(--md-sys-elevation-level1); }
+.m3-button--inverse-outlined { border-color: rgba(255, 248, 240, .55); background: rgba(255, 248, 240, .06); color: #fff8f0; box-shadow: none; }
+.m3-button--inverse-outlined:hover { background: rgba(255, 248, 240, .14); }
+.m3-button:active:not(:disabled) { transform: scale(.98); }
+.m3-button:disabled { opacity: .45; cursor: not-allowed; }
+.m3-icon-button { min-width: 48px; min-height: 48px; border-radius: var(--md-sys-shape-corner-full); }
+
+.m3-card {
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  background: var(--md-sys-color-surface-container-lowest);
+  box-shadow: var(--md-sys-elevation-level1);
+}
+.m3-card--tonal { border-color: transparent; background: var(--md-sys-color-surface-container); box-shadow: none; }
+.m3-card--interactive:hover { box-shadow: var(--md-sys-elevation-level2); }
+.m3-inverse-card {
+  border: 1px solid rgba(255, 248, 240, .11);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  background: #251c13;
+  color: var(--md-sys-color-inverse-on-surface);
+  box-shadow: var(--md-sys-elevation-level1);
+  --raaha-accent-deep: #d1aa63;
+  --raaha-accent-light: #f0d49a;
+}
+
+/* Filled fields use tonal surfaces, an explicit bottom edge and a visible
+   focus ring. Labels are kept outside the field and errors remain textual. */
+.m3-input {
+  min-height: 56px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-medium) var(--md-sys-shape-corner-medium) 4px 4px;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  box-shadow: none;
+  transition: background-color 180ms var(--md-sys-motion-standard), border-color 180ms var(--md-sys-motion-standard), box-shadow 180ms var(--md-sys-motion-standard);
+}
+.m3-input::placeholder { color: #71665f; opacity: 1; }
+.m3-input:hover { background: var(--md-sys-color-surface-container-highest); }
+.m3-input:focus {
+  border-color: var(--md-sys-color-primary);
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 0;
+  background: var(--md-sys-color-surface-container-lowest);
+  box-shadow: none;
+}
+.m3-input[aria-invalid="true"] { border-color: var(--md-sys-color-error); outline-color: var(--md-sys-color-error); }
+
+/* Navigation destinations get a tonal selected indicator without changing
+   button geometry. The existing animated underline remains decorative. */
+.site-header-surface { background: var(--md-sys-color-surface-container-low); }
+.site-nav-link { isolation: isolate; }
+.site-nav-link::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px 2px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background: var(--md-sys-color-primary-container);
+  opacity: 0;
+  content: "";
+  pointer-events: none;
+  transition: opacity 180ms var(--md-sys-motion-standard);
+}
+.site-nav-link[aria-current="page"]::before { opacity: 1; }
+.site-nav-link:not([aria-current="page"]):hover::before { opacity: .45; }
+.site-nav-link[aria-current="page"] { color: var(--md-sys-color-on-primary-container); }
+.site-nav-icon:hover { background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-primary); }
+.m3-button[aria-current="page"] { box-shadow: 0 0 0 3px var(--md-sys-color-primary-container); }
+
+/* Dialogs and snackbars are elevated tonal surfaces, not isolated designs. */
+.m3-dialog { border: 1px solid var(--md-sys-color-outline-variant); background: var(--md-sys-color-surface-container-low); box-shadow: 0 24px 70px rgba(26, 16, 11, .34); }
+.m3-dialog__close { min-width: 48px; min-height: 48px; background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface); }
+.m3-dialog__close:hover { background: var(--md-sys-color-surface-container-highest); }
+.m3-snackbar { background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); }
+
+@media (prefers-reduced-motion: reduce) {
+  .m3-button, .m3-input, .site-nav-link::before { transition: none; }
+}
+
+:where(.m3-inverse-card) :focus-visible { outline-color: #f7d99c; }
+.food-card:focus-within { outline: 3px solid var(--md-sys-color-primary); outline-offset: 3px; }
+.food-card > button:focus-visible { outline-offset: -4px; }
+
+/* A neutral map fallback is visible if the external embed is unavailable. */
+.visit-map { background: #e8e2d7; }
+.visit-map::before {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 40px 60px;
+  background: linear-gradient(28deg, transparent 40%, rgba(255, 253, 248, .6) 40.2%, rgba(255, 253, 248, .6) 41%, transparent 41.2%), linear-gradient(115deg, transparent 51%, rgba(255, 253, 248, .65) 51.2%, rgba(255, 253, 248, .65) 52%, transparent 52.2%), #e8e2d7;
+  color: #665c50;
+  content: "Open Maps for directions";
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Leaflet's controls use high internal z-indices; contain them beneath the fixed site header. */
+.tracking-layout { isolation: isolate; }
+.tracking-panel { border-color: var(--md-sys-color-outline-variant); background: rgba(252, 247, 240, .97); }
+.tracking-panel__primary {
+  min-height: 48px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font: var(--md-sys-typescale-label-large);
+  letter-spacing: .01em;
+  text-transform: none;
+}
+.tracking-panel__primary:hover { background: #652027; }
+.tracking-panel__icon-btn { width: 48px; height: 48px; }
+.tracking-panel__tonal { min-height: 48px; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.tracking-layout__map-tools button { min-width: 48px; min-height: 48px; }
+.tracking-map .leaflet-control-zoom.leaflet-bar a { width: 48px; height: 48px; line-height: 48px; }
+.tracking-map .leaflet-control-attribution a { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+.tracking-map__error { bottom: 152px; }
+@media (max-width: 1023px) {
+  .tracking-map__error { right: auto; bottom: 56px; left: 10px; max-width: calc(100% - 86px); }
+}
+@media (max-width: 600px) {
+  .tracking-layout__map-tools button { width: 48px; height: 48px; }
+}
