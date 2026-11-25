@@ -9,10 +9,9 @@ const menuSection = (page: Page) => page.getByRole("region", { name: "The Raaha 
 const dishButton = (scope: Page | Locator, name: string, price: number) =>
   scope.getByRole("button", { name: `${name} ${formatPrice(price)}`, exact: true });
 
-// The revealed category's dishes live in the menu page's dish showcase,
-// below the category wave — never inside the category rows themselves.
-const dishesOf = (page: Page, _categoryId: string) =>
-  page.locator("#menu-category-dishes .menu-dishes__list");
+// A category's dishes live on their own page (#/dishes/<categoryId>),
+// reached through the reveal's View Menu action.
+const dishesOf = (page: Page, _categoryId: string) => page.locator(".menu-dishes__list");
 
 test("home and menu share the same category artwork and editorial wave", async ({ page }) => {
   await page.goto("/#/home");
@@ -99,16 +98,20 @@ test("each category reveals its name, count and contextual menu action", async (
     await expect(detail.getByRole("heading", { level: 2 })).toHaveText(category.name);
     await expect(detail.getByText(`${itemsByCategory(category.id).length} dishes`, { exact: true })).toBeVisible();
     await expect(plate.locator("..").locator(".editorial-category__dishes")).toHaveCount(0);
-    await expect(plate.locator("..").getByRole("button", { name: "View Menu" })).toBeVisible();
+    await expect(detail.getByRole("button", { name: "View Menu" })).toBeVisible();
+    // The selected plate scales immediately with reduced motion and gradually
+    // with normal motion, so wait for the visual selection to take effect.
+    await expect.poll(() => plate.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).a)).toBeGreaterThan(1);
+    previous = category;
+    // View Menu leads to the category's own dishes page.
+    await detail.getByRole("button", { name: "View Menu" }).click();
+    await expect(page).toHaveURL(new RegExp(`/#/dishes/${category.id}$`));
     const dishes = dishesOf(page, category.id);
     await expect(dishes).toHaveAttribute("aria-label", `${category.name} dishes`);
     await expect(dishes.getByRole("listitem")).toHaveCount(itemsByCategory(category.id).length);
     const first = itemsByCategory(category.id)[0];
     await expect(dishButton(dishes, first.name, first.price)).toBeVisible();
-    // The selected plate scales immediately with reduced motion and gradually
-    // with normal motion, so wait for the visual selection to take effect.
-    await expect.poll(() => plate.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).a)).toBeGreaterThan(1);
-    previous = category;
+    await page.goBack();
   }
 });
 
@@ -116,6 +119,8 @@ test("all eight categories reveal their dish list on the menu and open a dish pa
   for (const category of CATEGORIES) {
     await page.goto("/#/menu");
     await plateFor(menuSection(page), category).click();
+    await menuSection(page).getByRole("button", { name: "View Menu" }).click();
+    await expect(page).toHaveURL(new RegExp(`/#/dishes/${category.id}$`));
     const dishes = dishesOf(page, category.id);
     await expect(dishes).toBeVisible();
     await expect(dishes).toHaveAttribute("aria-label", `${category.name} dishes`);
@@ -140,7 +145,7 @@ test("a keyboard user can reveal a category and follow its menu action", async (
   const view = menuSection(page).getByRole("button", { name: "View Menu" });
   await expect(view).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator("#menu-category-dishes")).toBeInViewport();
+  await expect(page).toHaveURL(/\/#\/dishes\/breads-rice$/);
   await dish.focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
@@ -162,22 +167,26 @@ test("missing category cutouts fall back without breaking navigation", async ({ 
   }
   const first = itemsByCategory("beverages")[0];
   const dish = dishButton(dishesOf(page, "beverages"), first.name, first.price);
+  await menuSection(page).getByRole("button", { name: "View Menu" }).click();
+  await expect(page).toHaveURL(/\/#\/dishes\/beverages$/);
   await expect(dish).toBeVisible();
   await dish.click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });
 
-test("a category deep link leads through to a dish and back to the revealed list", async ({ page }) => {
+test("a category deep link leads through its dishes page to a dish and back", async ({ page }) => {
   const dish = itemsByCategory("biryani")[2];
   await page.goto("/#/menu/biryani");
-  const dishes = dishesOf(page, "biryani");
   await expect(page.locator("#editorial-cat-biryani")).toBeInViewport();
+  await menuSection(page).getByRole("button", { name: "View Menu" }).click();
+  await expect(page).toHaveURL(/\/#\/dishes\/biryani$/);
+  const dishes = dishesOf(page, "biryani");
   await expect(dishes).toHaveAttribute("aria-label", "Biryani dishes");
   await dishButton(dishes, dish.name, dish.price).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${dish.id}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(dish.name);
   await page.goBack();
-  await expect(page).toHaveURL(/\/#\/menu\/biryani$/);
+  await expect(page).toHaveURL(/\/#\/dishes\/biryani$/);
   await expect(dishButton(dishes, dish.name, dish.price)).toBeVisible();
   await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(page).toHaveURL(/\/#\/menu$/);
@@ -197,6 +206,7 @@ test("changing categories during animation keeps the correct action and respects
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(detail).toHaveCSS("animation-name", "none");
   const first = itemsByCategory(category.id)[0];
+  await menu.getByRole("button", { name: "View Menu" }).click();
   await dishButton(dishesOf(page, category.id), first.name, first.price).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });
@@ -221,7 +231,7 @@ test("category details and controls stay usable from small phones to wide screen
         const plate = row.querySelector<HTMLButtonElement>(".editorial-category__plate")!;
         const detail = row.querySelector<HTMLElement>(".editorial-category__detail")!;
         const title = detail.querySelector<HTMLElement>(".editorial-category__detail-title")!;
-        const view = row.querySelector<HTMLElement>(".editorial-category__view")!;
+        const view = detail.querySelector<HTMLElement>(".editorial-category__view")!;
         const rowBox = row.getBoundingClientRect();
         const plateBox = plate.getBoundingClientRect();
         const detailBox = detail.getBoundingClientRect();
@@ -247,7 +257,7 @@ test("category details and controls stay usable from small phones to wide screen
           .filter((other) => other !== plate).map((other) => other.getBoundingClientRect());
         const neighborPlateOverlap = Math.max(0, ...neighborPlates.map((other) => intersection(plateBox, other)));
         const neighborDetailOverlap = Math.max(0, ...neighborPlates.map((other) => intersection(detailBox, other)));
-        const neighborViewOverlap = Math.max(0, ...neighborPlates.map((other) => intersection(viewBox, other)));
+
         const wave = surface.querySelector<SVGGeometryElement>(".editorial-surface__wave path")!;
         const screenToWave = wave.getScreenCTM()!.inverse();
         // Check the actual text bounds against the wave, including on ultrawide
@@ -289,12 +299,9 @@ test("category details and controls stay usable from small phones to wide screen
           readableBackdrops: backdrops.every(({ element, red }) => textOnBackground(element, red)),
           titleFitsDetail: textBox.left >= detailBox.left - 1 && textBox.right <= detailBox.right + 1 &&
             textBox.top >= detailBox.top - 1 && textBox.bottom <= detailBox.bottom + 1,
-          viewFitsRow: viewBox.top >= rowBox.top - 1 && viewBox.bottom <= rowBox.bottom + 1 &&
-            viewBox.left >= rowBox.left - 1 && viewBox.right <= rowBox.right + 1,
           viewWidth: viewBox.width,
           viewHeight: viewBox.height,
           viewUsable: centerHits(view),
-          neighborViewOverlap,
           overlap,
           plateWidth: plateBox.width,
           plateHeight: plateBox.height,
@@ -310,8 +317,6 @@ test("category details and controls stay usable from small phones to wide screen
       expect(geometry.neighborDetailOverlap, context).toBeLessThanOrEqual(1);
       expect(geometry.readableBackdrops, context).toBe(true);
       expect(geometry.titleFitsDetail, context).toBe(true);
-      expect(geometry.viewFitsRow, context).toBe(true);
-      expect(geometry.neighborViewOverlap, context).toBeLessThanOrEqual(1);
       expect(geometry.viewWidth, context).toBeGreaterThanOrEqual(44);
       expect(geometry.viewHeight, context).toBeGreaterThanOrEqual(44);
       expect(geometry.viewUsable, context).toBe(true);

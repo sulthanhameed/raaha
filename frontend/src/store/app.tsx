@@ -22,6 +22,7 @@ export type Page =
   | "reserve"
   | "cart"
   | "food"
+  | "dishes"
   | "tracking";
 
 export interface Route {
@@ -83,7 +84,7 @@ const Ctx = createContext<AppState | null>(null);
 function routeFromHash(): Route {
   const h = window.location.hash.replace(/^#\/?/, "");
   const [page, id] = h.split("/");
-  const pages: Page[] = ["home", "menu", "about", "services", "reserve", "cart", "food", "tracking"];
+  const pages: Page[] = ["home", "menu", "about", "services", "reserve", "cart", "food", "dishes", "tracking"];
   if (pages.includes(page as Page)) return { page: page as Page, id };
   return { page: "home" };
 }

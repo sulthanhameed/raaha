@@ -26,7 +26,7 @@ cp "$ROOT/database/package.json" "$ROOT/database/package-lock.json" "$TMP/databa
 cp "$ROOT/database/supabase/config.toml" "$ROOT/database/supabase/.gitignore" "$TMP/database/supabase/"
 cp -R "$ROOT/database/supabase/migrations" "$TMP/database/supabase/"
 cp "$ROOT/database/scripts/test-supabase.mjs" "$ROOT/database/scripts/test-orders-payments.mjs" "$TMP/database/scripts/"
-cp "$ROOT/.mcp.json" "$TMP/database/.mcp.json"
+if [ -f "$ROOT/.mcp.json" ]; then cp "$ROOT/.mcp.json" "$TMP/database/.mcp.json"; fi
 cp "$ROOT/database/README.md" "$TMP/database/README.md"
 
 for part in frontend backend database; do

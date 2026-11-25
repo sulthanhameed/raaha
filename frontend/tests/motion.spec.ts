@@ -77,7 +77,8 @@ test("category plates arrive without moving their controls and show a selection 
   }));
   expect(halo).toEqual({ animation: "plate-halo", pointerEvents: "none" });
   const first = itemsByCategory(CATEGORIES[0].id)[0];
-  await page.locator("#menu-category-dishes .menu-dishes__list")
+  await row.getByRole("button", { name: "View Menu" }).click();
+  await page.locator(".menu-dishes__list")
     .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}`, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });

@@ -79,7 +79,8 @@ test("heading accents and category orbits are decorative and keep plate sizes", 
   expect(await pseudo(well, "animationName")).toBe("none");
   expect(await pseudo(well, "opacity")).toBe("0");
   const first = itemsByCategory(category.id)[0];
-  await page.locator("#menu-category-dishes .menu-dishes__list")
+  await plate.locator("..").getByRole("button", { name: "View Menu" }).click();
+  await page.locator(".menu-dishes__list")
     .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}`, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });

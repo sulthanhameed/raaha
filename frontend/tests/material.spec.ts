@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("shared Material surfaces and navigation fit each route", async ({ page }) => {
-  for (const route of ["home", "menu", "menu/biryani", "food/egg-biryani", "reserve", "services", "about", "cart", "tracking"]) {
+  for (const route of ["home", "menu", "menu/biryani", "dishes/biryani", "food/egg-biryani", "reserve", "services", "about", "cart", "tracking"]) {
     await page.goto(`/#/${route}`);
     const width = page.viewportSize()!.width;
     const layout = await page.evaluate(() => {

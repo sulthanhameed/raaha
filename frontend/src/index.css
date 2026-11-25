@@ -392,11 +392,9 @@ body {
 .editorial-category--right .editorial-category__detail { right: 3%; left: auto; color: #fff8ef; }
 /* The View Menu action sits just below the revealed category's band. */
 .editorial-category__view {
-  position: relative;
-  z-index: 2;
-  margin: 0 3% 16px auto;
   display: flex;
   align-items: center;
+  margin-top: 6px;
   min-height: 44px;
   width: fit-content;
   border: 0;
@@ -408,7 +406,7 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.editorial-category--left .editorial-category__view { margin-inline: 3% auto; color: #211b16; }
+.editorial-category--left .editorial-category__view { color: #211b16; }
 .editorial-category__view > span {
   display: inline-flex;
   align-items: center;
@@ -420,12 +418,26 @@ body {
 .editorial-category__view svg { flex: none; transition: transform 200ms ease; }
 .editorial-category__view:hover svg { transform: translate(2px, -2px); }
 .editorial-category__view:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-@media (max-width: 639px) {
-  .editorial-category__view { margin-inline: auto; }
-}
 
-/* Menu page dish showcase: a calm cream section under the category wave. */
-.menu-dishes { background: #f6efe3; color: #211b16; padding: 46px 0 58px; }
+
+/* The category dishes page: a calm cream canvas for the food cards. */
+.menu-dishes { background: #f6efe3; color: #211b16; padding: 34px 0 58px; min-height: calc(100vh - var(--site-header-height)); }
+.menu-dishes__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  color: #7c1622;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 2px;
+}
+.menu-dishes__back span { border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+.menu-dishes__back:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .menu-dishes__inner { margin: 0 auto; max-width: 1180px; padding: 0 20px; }
 .menu-dishes__eyebrow {
   font-size: 10px;
@@ -487,7 +499,11 @@ body {
   line-height: 1.06;
   text-wrap: balance;
 }
-.editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 6px; font-size: 12px; font-weight: 700; }
+.editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 4px; font-size: 12px; font-weight: 700; }
+/* The revealed detail keeps to the band: the index line steps aside once the
+   category is open, making room for View Menu under the dish count. */
+.editorial-category.is-selected .editorial-category__detail-number { display: none; }
+.editorial-category__detail-title { margin-top: 4px; }
 @keyframes editorial-detail-in {
   from { transform: translate(20px, -50%); }
   to { transform: translate(0, -50%); }
