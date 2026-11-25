@@ -122,7 +122,7 @@ test("category selection adds a short, noninteractive flourish without resizing 
   const grill = itemsByCategory("grill-tandoor")[0];
   await second.getByRole("button", { name: "View Menu" }).click();
   await page.locator(".menu-dishes__list")
-    .getByRole("button", { name: `${grill.name} ${formatPrice(grill.price)}`, exact: true }).click();
+    .getByRole("button", { name: `${grill.name} ${formatPrice(grill.price)}` }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${grill.id}$`));
 });
 

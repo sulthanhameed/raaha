@@ -474,7 +474,7 @@ test("new online categories and dishes remain browsable on the menu dish card", 
   const dishes = page.locator(".menu-dishes__list");
   await expect(dishes).toHaveAttribute("aria-label", "Seasonal dishes");
   await expect(dishes.getByRole("listitem")).toHaveCount(1);
-  await dishes.getByRole("button", { name: "Seasonal Plate ₹299", exact: true }).click();
+  await dishes.getByRole("button", { name: "Seasonal Plate ₹299" }).click();
   await expect(page).toHaveURL(/\/#\/food\/seasonal-plate$/);
   await expect(page.getByRole("heading", { level: 1, name: "Seasonal Plate" })).toBeVisible();
   await expect(page.locator("main")).toContainText("₹299");

@@ -81,7 +81,7 @@ test("heading accents and category orbits are decorative and keep plate sizes", 
   const first = itemsByCategory(category.id)[0];
   await plate.locator("..").getByRole("button", { name: "View Menu" }).click();
   await page.locator(".menu-dishes__list")
-    .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}`, exact: true }).click();
+    .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}` }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });
 

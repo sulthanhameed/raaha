@@ -1,15 +1,46 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Star } from "lucide-react";
 import { formatPrice } from "../data/menu";
+import { reviewsFor } from "../data/reviews";
 import { useMenu } from "../store/menu";
 import { useApp } from "../store/app";
 import { showFoodImageFallback } from "../utils/imageFallback";
 
+function Rating({ rating, count }: { rating: number; count: number }) {
+  return (
+    <span className="menu-dishes__rating">
+      <Star size={12} className="menu-dishes__star" aria-hidden="true" focusable="false" />
+      <span>{rating.toFixed(1)}</span>
+      <span className="menu-dishes__rating-count">({count.toLocaleString("en-IN")})</span>
+      <span className="sr-only">{`rated ${rating} out of 5 from ${count} reviews`}</span>
+    </span>
+  );
+}
+
+function Stars({ rating }: { rating: number }) {
+  return (
+    <span className="menu-dishes__stars" role="img" aria-label={`Rated ${rating} out of 5`}>
+      {[1, 2, 3, 4, 5].map((step) => (
+        <Star
+          key={step}
+          size={13}
+          className={step <= Math.round(rating) ? "is-on" : ""}
+          aria-hidden="true"
+          focusable="false"
+        />
+      ))}
+    </span>
+  );
+}
+
 /* A category's foods live on their own page: the category rows stay
-   artwork-only, and View Menu leads here. */
+   artwork-only, and View Menu leads here. Each card carries the dish's
+   details and rating, and the page closes with guest reviews. */
 export function CategoryDishesPage({ categoryId }: { categoryId: string }) {
   const { categories, itemsByCategory } = useMenu();
   const { navigate } = useApp();
   const category = categories.find((entry) => entry.id === categoryId);
+  const items = category ? itemsByCategory(categoryId) : [];
+  const reviews = category ? reviewsFor(categoryId) : [];
   return (
     <main className="pt-[var(--site-header-height)]">
       <section className="menu-dishes" aria-labelledby="menu-dishes-title">
@@ -24,25 +55,66 @@ export function CategoryDishesPage({ categoryId }: { categoryId: string }) {
                 <h1 id="menu-dishes-title" className="menu-dishes__title">
                   {category.name} <em>dishes</em>
                 </h1>
+                <p className="menu-dishes__blurb">{category.description}</p>
                 <p className="menu-dishes__count">
-                  {itemsByCategory(categoryId).length} dishes · tap a dish to view it
+                  {items.length} dishes · tap a dish for its full details
                 </p>
               </header>
               <ul className="menu-dishes__list" aria-label={`${category.name} dishes`}>
-                {itemsByCategory(categoryId).map((item) => (
+                {items.map((item) => (
                   <li key={item.id}>
-                    <button type="button" onClick={() => navigate("food", item.id)}>
+                    <button type="button" className="menu-dishes__card" onClick={() => navigate("food", item.id)}>
                       <span className="menu-dishes__plate">
                         <img src={item.image} alt="" loading="lazy" decoding="async" onError={showFoodImageFallback} />
+                        {item.tag && <span className="menu-dishes__tag">{item.tag}</span>}
                       </span>
-                      <span className="menu-dishes__row">
-                        <span className="menu-dishes__name">{item.name}</span>
-                        <span className="menu-dishes__price">{formatPrice(item.price)}</span>
+                      <span className="menu-dishes__body">
+                        <span className="menu-dishes__row">
+                          <span
+                            className={`menu-dishes__diet ${item.veg ? "is-veg" : "is-nonveg"}`}
+                            role="img"
+                            aria-label={item.veg ? "Vegetarian" : "Non-vegetarian"}
+                          />
+                          <span className="menu-dishes__name">{item.name}</span>
+                          <span className="menu-dishes__price">{formatPrice(item.price)}</span>
+                        </span>
+                        <span className="menu-dishes__desc">{item.description}</span>
+                        <span className="menu-dishes__meta">
+                          <Rating rating={item.rating} count={item.ratingsCount} />
+                          <span aria-hidden="true">·</span>
+                          <span>{item.time}</span>
+                          {item.spice !== "None" && (
+                            <>
+                              <span aria-hidden="true">·</span>
+                              <span>{item.spice} spice</span>
+                            </>
+                          )}
+                        </span>
                       </span>
                     </button>
                   </li>
                 ))}
               </ul>
+              {reviews.length > 0 && (
+                <section className="menu-dishes__reviews" aria-labelledby="menu-dishes-reviews-title">
+                  <h2 id="menu-dishes-reviews-title" className="menu-dishes__reviews-title">
+                    What guests say <em>about {category.name.toLowerCase()}</em>
+                  </h2>
+                  <ul className="menu-dishes__review-list">
+                    {reviews.map((review) => (
+                      <li key={review.id}>
+                        <figure className="menu-dishes__review">
+                          <Stars rating={review.rating} />
+                          <blockquote className="menu-dishes__review-text">{review.text}</blockquote>
+                          <figcaption className="menu-dishes__review-by">
+                            {review.author} · {review.date} · ordered {review.dish}
+                          </figcaption>
+                        </figure>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
             </>
           ) : (
             <p className="menu-dishes__count" role="status">Category unavailable.</p>

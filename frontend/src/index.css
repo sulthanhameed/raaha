@@ -483,17 +483,75 @@ body {
 }
 .menu-dishes__list button:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -18px rgba(23, 18, 8, 0.5); }
 .menu-dishes__list button:focus-visible { outline: 2px solid #7c1622; outline-offset: 3px; }
-.menu-dishes__plate { display: block; aspect-ratio: 4 / 3; background: #eadfce; }
+.menu-dishes__plate { position: relative; display: block; aspect-ratio: 4 / 3; background: #eadfce; }
 .menu-dishes__plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.menu-dishes__row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 11px 14px 13px;
+.menu-dishes__tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #7c1622;
+  color: #fff8ef;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 999px;
 }
+.menu-dishes__body { display: block; padding: 11px 14px 13px; }
+.menu-dishes__row { display: flex; align-items: baseline; gap: 8px; }
+.menu-dishes__diet {
+  flex: none;
+  align-self: center;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid #1e7a3c;
+  border-radius: 3px;
+  display: grid;
+  place-items: center;
+}
+.menu-dishes__diet::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #1e7a3c; }
+.menu-dishes__diet.is-nonveg { border-color: #8a3b12; }
+.menu-dishes__diet.is-nonveg::after { background: #8a3b12; }
 .menu-dishes__name { font-size: 14px; font-weight: 600; line-height: 1.3; }
-.menu-dishes__price { flex: none; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.menu-dishes__price { flex: none; margin-left: auto; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.menu-dishes__desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+.menu-dishes__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 700; color: #4d4338; }
+.menu-dishes__rating { display: inline-flex; align-items: center; gap: 4px; }
+.menu-dishes__star { fill: #b0761b; color: #b0761b; }
+.menu-dishes__rating-count { color: #6a5c4b; font-weight: 600; }
+.menu-dishes__blurb { margin-top: 8px; max-width: 560px; font-size: 13px; line-height: 1.6; opacity: 0.8; }
+.menu-dishes__reviews { margin-top: 42px; }
+.menu-dishes__reviews-title { font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); font-weight: 500; }
+.menu-dishes__reviews-title em { color: #7c1622; }
+.menu-dishes__review-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.menu-dishes__review {
+  margin: 0;
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+  background: #fff8ef;
+  box-shadow: 0 12px 28px -20px rgba(23, 18, 8, 0.5);
+}
+.menu-dishes__stars { display: inline-flex; gap: 2px; color: #cbb389; }
+.menu-dishes__stars .is-on { fill: #b0761b; color: #b0761b; }
+.menu-dishes__review-text { margin: 10px 0 0; font-size: 13px; line-height: 1.6; }
+.menu-dishes__review-by { margin-top: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; opacity: 0.7; }
 .editorial-category__detail-number { font-size: 10px; font-weight: 800; letter-spacing: 0.18em; opacity: 0.7; }
 .editorial-category__detail-title {
   margin-top: 7px;

@@ -7,7 +7,7 @@ const plateFor = (scope: Page | Locator, category: Category) =>
 const menuSection = (page: Page) => page.getByRole("region", { name: "The Raaha menu." });
 
 const dishButton = (scope: Page | Locator, name: string, price: number) =>
-  scope.getByRole("button", { name: `${name} ${formatPrice(price)}`, exact: true });
+  scope.getByRole("button", { name: `${name} ${formatPrice(price)}` });
 
 // A category's dishes live on their own page (#/dishes/<categoryId>),
 // reached through the reveal's View Menu action.
@@ -182,6 +182,14 @@ test("a category deep link leads through its dishes page to a dish and back", as
   await expect(page).toHaveURL(/\/#\/dishes\/biryani$/);
   const dishes = dishesOf(page, "biryani");
   await expect(dishes).toHaveAttribute("aria-label", "Biryani dishes");
+  // Every card carries the dish's details and rating, and the page closes with guest reviews.
+  const firstCard = dishes.getByRole("listitem").first().getByRole("button");
+  await expect(firstCard).toContainText(itemsByCategory("biryani")[0].description.split(". ")[0]);
+  await expect(firstCard.locator(".menu-dishes__rating")).toContainText(itemsByCategory("biryani")[0].rating.toFixed(1));
+  await expect(firstCard.locator(".menu-dishes__meta")).toContainText(itemsByCategory("biryani")[0].time);
+  await expect(page.getByRole("heading", { name: /What guests say/ })).toBeVisible();
+  await expect(page.locator(".menu-dishes__review")).toHaveCount(3);
+  await expect(page.locator(".menu-dishes__review").first()).toContainText("ordered");
   await dishButton(dishes, dish.name, dish.price).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${dish.id}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(dish.name);

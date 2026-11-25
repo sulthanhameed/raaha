@@ -79,7 +79,7 @@ test("category plates arrive without moving their controls and show a selection 
   const first = itemsByCategory(CATEGORIES[0].id)[0];
   await row.getByRole("button", { name: "View Menu" }).click();
   await page.locator(".menu-dishes__list")
-    .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}`, exact: true }).click();
+    .getByRole("button", { name: `${first.name} ${formatPrice(first.price)}` }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${first.id}$`));
 });
 
