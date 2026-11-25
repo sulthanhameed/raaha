@@ -11,7 +11,6 @@ mkdir -p "$OUT" "$TMP/frontend/scripts" "$TMP/frontend/deployment/frontend" "$TM
 
 cp "$ROOT/frontend/package.json" "$ROOT/frontend/package-lock.json" "$ROOT/frontend/index.html" "$ROOT/frontend/vite.config.ts" "$ROOT/frontend/tsconfig.json" "$ROOT/frontend/.env.example" "$TMP/frontend/"
 cp -R "$ROOT/frontend/src" "$ROOT/frontend/public" "$TMP/frontend/"
-cp "$ROOT/frontend/scripts/check-cutouts.mjs" "$TMP/frontend/scripts/"
 cp "$ROOT/frontend/playwright.config.ts" "$ROOT/frontend/playwright.backend.config.ts" "$ROOT/frontend/playwright.captcha.config.ts" "$TMP/frontend/"
 cp -R "$ROOT/frontend/tests" "$ROOT/frontend/tests-backend" "$ROOT/frontend/tests-captcha" "$TMP/frontend/"
 cp "$ROOT/deployment/frontend/Dockerfile" "$ROOT/deployment/frontend/nginx.conf" "$ROOT/deployment/frontend/nginx.proxy.conf.example" "$ROOT/deployment/frontend/README.md" "$TMP/frontend/deployment/frontend/"

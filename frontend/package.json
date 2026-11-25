@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:cutouts && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
@@ -13,8 +13,7 @@
     "test:captcha": "playwright test --config playwright.captcha.config.ts",
     "test:db": "node --test scripts/test-supabase.mjs scripts/test-orders-payments.mjs",
     "test:server": "npm --prefix server test",
-    "package:hosting": "sh scripts/package-hosting.sh",
-    "check:cutouts": "node scripts/check-cutouts.mjs"
+    "package:hosting": "sh scripts/package-hosting.sh"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

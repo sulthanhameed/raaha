@@ -38,11 +38,17 @@ export function AboutPage() {
   const { menu: MENU, categories: CATEGORIES } = useMenu();
   return (
     <main className="pt-[var(--site-header-height)]">
-      {/* The generated room is an illustration, not a photograph of Raaha. */}
+      {/* Real dining-room photograph (Pexels), framed so it stays sharp at native size. */}
       <section className="about-hero relative isolate overflow-hidden bg-ink text-paper" data-section-light>
-        <img src="/images/illustrative-dining-room.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/35" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/20" aria-hidden="true" />
+        <div className="relative h-44 md:hidden" aria-hidden="true">
+          <img src="/images/raaha-dining-room.jpg" alt="" className="h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+        </div>
+        <div className="absolute inset-y-0 right-0 hidden w-[min(44vw,540px)] md:block" aria-hidden="true">
+          <img src="/images/raaha-dining-room.jpg" alt="" className="h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/45 to-ink/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/30" />
+        </div>
         <PageOrnament />
         <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-7 sm:px-6 lg:px-8 lg:pt-28">
           <Reveal>

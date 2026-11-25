@@ -143,7 +143,7 @@ Keep the service role and provider credentials on the backend only, protect Dash
 
 Category rows on the home and menu pages stay artwork-only: clicking a plate reveals the category name and its total dish count, with a `View Menu` action directly below the count. `View Menu` opens the category's own dishes page (`#/dishes/<categoryId>`), a separate cream page with a card per dish (photograph, name and price) that opens the dish page, plus a back-to-menu link. On the home and menu pages no dish names or prices appear inside the rows; deep links (`#/menu/<categoryId>`) reveal their category row and scroll it into view, and the dishes page is one tap away.
 
-Category plate artwork uses the category's dish photograph (`public/images/dish-cutouts/`, falling back to the full photograph if a cut-out fails); `scripts/check-cutouts.mjs`, wired into `npm run build`, verifies a cut-out exists for every menu item. `tests/menu-editorial.spec.ts` locks the reveal contract, the dishes-page round trip, geometry across viewports and keyboard flow; `tests/material-a11y.spec.ts` audits the dishes page for WCAG-tagged violations.
+Category plates crop the representative dish photograph to a circle in CSS. Every image on the site is real photography — Pexels and Wikimedia Commons, credited in `frontend/public/images/ATTRIBUTION.md` — with no AI-generated imagery anywhere. `tests/menu-editorial.spec.ts` locks the reveal contract, the dishes-page round trip, geometry across viewports and keyboard flow; `tests/material-a11y.spec.ts` audits the dishes page for WCAG-tagged violations.
 
 ## Motion design and accessibility
 ## Home: classic section order
