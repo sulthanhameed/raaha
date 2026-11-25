@@ -633,6 +633,13 @@ body {
 .editorial-surface--menu .editorial-surface__end { padding-block: 18px; }
 .editorial-surface--menu .editorial-surface__end > span { align-self: flex-start; transform: translateY(-12px); }
 
+/* Taller bands on phones so the enlarged plates never reach the next row;
+   declared after the surface band rules so the cascade keeps them. */
+@media (max-width: 639px) {
+  .editorial-surface--home { --band: clamp(140px, 40vw, 160px); }
+  .editorial-surface--menu { --band: clamp(132px, 40vw, 152px); }
+}
+
 /* Keep the wave aligned with the centered content on very wide screens. */
 @media (min-width: 1280px) {
   .editorial-surface--menu::before {
