@@ -1,6 +1,6 @@
 # Food image credits
 
-Every photograph on this site is real photography, stored locally for reliable loading. None of it is AI-generated, and none of it is photography of actual Raaha dishes. The category plates on the home and menu pages crop these same dish photographs to a circle in CSS; there are no separate cut-out artworks.
+Every photograph on this site is real photography, stored locally for reliable loading. None of it is AI-generated, and none of it is photography of actual Raaha dishes. The category plates on the home and menu pages float these same dish photographs with their backgrounds removed; the transparent cut-outs in `dish-cutouts/` are matting derivatives of the photos above (IS-Net general matting, MIT-licensed model via `@rmbg/model-general`), not separate artworks.
 
 ## Pexels photos
 

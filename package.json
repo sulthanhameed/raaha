@@ -10,7 +10,6 @@
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
     "typecheck": "npm --prefix frontend run typecheck",
-    "check:cutouts": "npm --prefix frontend run check:cutouts",
     "test:e2e": "npm --prefix frontend run test:e2e",
     "test:backend": "npm --prefix frontend run test:backend",
     "test:captcha": "npm --prefix frontend run test:captcha",

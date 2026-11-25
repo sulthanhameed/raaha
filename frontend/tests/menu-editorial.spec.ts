@@ -47,7 +47,7 @@ test("home and menu share the same category artwork and editorial wave", async (
     images: [...section.querySelectorAll(".editorial-category__plate img")].map((image) => image.getAttribute("src")),
   }));
   expect(menuDesign).toEqual(homeDesign);
-  expect(menuDesign.images.every((src) => src?.startsWith("/images/dishes/"))).toBe(true);
+  expect(menuDesign.images.every((src) => src?.startsWith("/images/dish-cutouts/"))).toBe(true);
   const menuSize = await menu.evaluate((section) => ({
     height: section.getBoundingClientRect().height,
     row: section.querySelector(".editorial-category")!.getBoundingClientRect().height,
@@ -153,6 +153,7 @@ test("a keyboard user can reveal a category and follow its menu action", async (
 });
 
 test("missing dish photographs fall back without breaking navigation", async ({ page }) => {
+  await page.route("**/images/dish-cutouts/*.webp", (route) => route.abort());
   await page.route("**/images/dishes/*.webp", (route) => route.abort());
   await page.goto("/#/menu");
   // Cover both the eagerly loaded first image and a lazy-loaded image below the fold.
