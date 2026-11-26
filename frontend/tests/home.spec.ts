@@ -95,7 +95,7 @@ test("the section order, guest book and closing invitation are restored", async 
     if (element.classList.contains("editorial-surface--home")) return "categories";
     return [...element.classList].find((name) => name.startsWith("home-"));
   }));
-  expect(order).toEqual(["home-hero", "home-marquee", "home-story", "categories", "home-signatures", "home-services", "home-testimonials", "home-visit", "home-invitation"]);
+  expect(order).toEqual(["home-hero", "home-marquee", "home-story", "categories", "home-signatures", "home-services", "home-testimonials", "home-faq", "home-rating", "home-visit", "home-invitation"]);
   const story = page.locator(".home-story");
   await expect(story).toContainText(`${MENU.length}`);
   await expect(story).toContainText(`${CATEGORIES.length}`);

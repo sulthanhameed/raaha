@@ -113,6 +113,43 @@ export function CategoryDishesPage({ categoryId }: { categoryId: string }) {
                   </li>
                 ))}
               </ul>
+              {related.length > 0 && (
+                <section className="menu-dishes__related" aria-labelledby="menu-dishes-related-title">
+                  <h2 id="menu-dishes-related-title" className="menu-dishes__reviews-title">
+                    Related foods <em>from across the table</em>
+                  </h2>
+                  <p className="menu-dishes__blurb">
+                    {`Guests who order ${category.name.toLowerCase()} often round out the table with these favourites from the rest of our kitchen.`}
+                  </p>
+                  <div className="menu-dishes__related-track">
+                    <ul className="menu-dishes__related-list" aria-label={`Related foods to ${category.name}`}>
+                      {[...related, ...related].map((item, position) => (
+                        <li key={`${item.id}-${position}`} aria-hidden={position >= related.length ? true : undefined}>
+                          <button
+                            type="button"
+                            className="menu-dishes__related-card"
+                            tabIndex={position >= related.length ? -1 : 0}
+                            onClick={() => navigate("food", item.id)}
+                          >
+                            <span className="menu-dishes__related-plate">
+                              <img src={item.image} alt="" loading="lazy" decoding="async" onError={showFoodImageFallback} />
+                            </span>
+                            <span className="menu-dishes__related-body">
+                              <span className="menu-dishes__related-name">{item.name}</span>
+                              <span className="menu-dishes__related-cat">{categoryById(item.category).name}</span>
+                              <span className="menu-dishes__related-meta">
+                                <Rating rating={item.rating} count={item.ratingsCount} />
+                                <span aria-hidden="true">·</span>
+                                <span>{formatPrice(item.price)}</span>
+                              </span>
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </section>
+              )}
               {reviews.length > 0 && (
                 <section className="menu-dishes__reviews" aria-labelledby="menu-dishes-reviews-title">
                   <h2 id="menu-dishes-reviews-title" className="menu-dishes__reviews-title">
@@ -128,36 +165,6 @@ export function CategoryDishesPage({ categoryId }: { categoryId: string }) {
                             {review.author} · {review.date} · ordered {review.dish}
                           </figcaption>
                         </figure>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
-              {related.length > 0 && (
-                <section className="menu-dishes__related" aria-labelledby="menu-dishes-related-title">
-                  <h2 id="menu-dishes-related-title" className="menu-dishes__reviews-title">
-                    Related foods <em>from across the table</em>
-                  </h2>
-                  <p className="menu-dishes__blurb">
-                    {`Guests who order ${category.name.toLowerCase()} often round out the table with these favourites from the rest of our kitchen.`}
-                  </p>
-                  <ul className="menu-dishes__related-list" aria-label={`Related foods to ${category.name}`}>
-                    {related.map((item) => (
-                      <li key={item.id}>
-                        <button type="button" className="menu-dishes__related-card" onClick={() => navigate("food", item.id)}>
-                          <span className="menu-dishes__related-plate">
-                            <img src={item.image} alt="" loading="lazy" decoding="async" onError={showFoodImageFallback} />
-                          </span>
-                          <span className="menu-dishes__related-body">
-                            <span className="menu-dishes__related-name">{item.name}</span>
-                            <span className="menu-dishes__related-cat">{categoryById(item.category).name}</span>
-                            <span className="menu-dishes__related-meta">
-                              <Rating rating={item.rating} count={item.ratingsCount} />
-                              <span aria-hidden="true">·</span>
-                              <span>{formatPrice(item.price)}</span>
-                            </span>
-                          </span>
-                        </button>
                       </li>
                     ))}
                   </ul>

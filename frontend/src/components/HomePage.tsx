@@ -19,6 +19,7 @@ import { useApp, useOpenNow } from "../store/app";
 import { showFoodImageFallback } from "../utils/imageFallback";
 import { usePauseOffscreen } from "../utils/usePauseOffscreen";
 import { BannerGlow } from "./BannerGlow";
+import { FaqSection, SiteRatingSection } from "./GuestSections";
 import { CountUpValue } from "./CountUpValue";
 import { EditorialCategories } from "./EditorialCategories";
 import { EmberAtmosphere } from "./EmberAtmosphere";
@@ -428,6 +429,8 @@ export function HomePage() {
       <Signatures />
       <ServicesStrip />
       <Testimonials />
+      <FaqSection />
+      <SiteRatingSection />
       <VisitAndCta />
     </main>
   );

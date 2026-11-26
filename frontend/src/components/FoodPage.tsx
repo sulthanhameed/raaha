@@ -26,6 +26,7 @@ import { usePointerTilt } from "../utils/usePointerTilt";
 import { CountUpValue } from "./CountUpValue";
 import { SteamField } from "./SteamField";
 import { FoodCard, QtyStepper, Reveal, VegMark } from "./ui";
+import { RateStars } from "./StarRating";
 import { DishReviews } from "./DishReviews";
 
 export function FoodPage({ itemId }: { itemId: string }) {
@@ -143,6 +144,17 @@ export function FoodPage({ itemId }: { itemId: string }) {
                 {item.name}
               </h1>
               <p className="food-detail__description mt-4 text-[16px] leading-relaxed text-ink/70">{item.description}</p>
+              <div className="food-detail__rate mt-6 rounded-3xl bg-cream/70 px-5 py-4 ring-1 ring-ink/10">
+                <p className="lux-label text-golddeep">Rate this dish</p>
+                <div className="mt-2">
+                  <RateStars
+                    storageKey={`dish:${item.id}`}
+                    seedSum={item.rating * item.ratingsCount}
+                    seedCount={item.ratingsCount}
+                    noun={item.name}
+                  />
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => {

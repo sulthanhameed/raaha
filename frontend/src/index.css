@@ -291,7 +291,7 @@ body {
    drawn larger than the plate box so the food reads bigger without
    moving any control geometry. */
 .editorial-plate__well img {
-  height: 160%;
+  height: 180%;
   aspect-ratio: 1;
   width: auto;
   object-fit: contain;
@@ -533,14 +533,35 @@ body {
 .menu-dishes__reviews { margin-top: 42px; }
 /* Related foods trail closing every category dishes page. */
 .menu-dishes__related { margin-top: 42px; }
-.menu-dishes__related-list {
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
+/* One row of related foods that drifts past like a serving counter;
+   hover or focus parks it so a card can be picked. */
+.menu-dishes__related-track {
+  margin-top: 18px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+.menu-dishes__related-list {
+  margin: 0;
+  padding: 4px 0 10px;
+  list-style: none;
+  display: flex;
+  width: max-content;
+  animation: related-drift 28s linear infinite;
+}
+.menu-dishes__related-track:hover .menu-dishes__related-list,
+.menu-dishes__related-list:focus-within { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  /* No drift: the row becomes a plain horizontal scroller that never
+     widens the document. */
+  .menu-dishes__related-list { animation: none; width: auto; }
+  .menu-dishes__related-track { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+}
+@keyframes related-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.menu-dishes__related-list > li { flex: none; width: 236px; margin-right: 14px; }
 .menu-dishes__related-list button {
   display: block;
   width: 100%;
@@ -660,6 +681,60 @@ body {
 .editorial-surface--menu .editorial-category__detail p:not(.editorial-category__detail-number) { margin-top: 3px; }
 .editorial-surface--menu .editorial-surface__end { padding-block: 18px; }
 .editorial-surface--menu .editorial-surface__end > span { align-self: flex-start; transform: translateY(-12px); }
+
+/* Guest voice: star rating input and the FAQ accordion. */
+.rate-stars { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.rate-stars__input { display: inline-flex; gap: 2px; }
+.rate-stars__btn {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #c9b28a;
+  cursor: pointer;
+  transition: transform 160ms ease, color 160ms ease;
+}
+.rate-stars__btn:hover { transform: translateY(-2px) scale(1.08); }
+.rate-stars__btn:focus-visible { outline: 2px solid #7c1622; outline-offset: 2px; }
+.rate-stars__btn.is-on { color: #b0761b; }
+.rate-stars__btn.is-on svg { fill: #b0761b; }
+.rate-stars__summary { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; color: #4d4338; }
+.faq { background: #fff8ef; }
+.faq__inner { max-width: 860px; margin: 0 auto; padding: 64px 20px 72px; }
+.faq__title { font-family: var(--font-display); font-size: clamp(26px, 3vw, 40px); font-weight: 500; }
+.faq__title em { color: #7c1622; }
+.faq__list { margin: 26px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.faq__item { border: 1px solid #e5d7c2; border-radius: 16px; background: #fdf3e4; overflow: hidden; }
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.faq__q:focus-visible { outline: 2px solid #7c1622; outline-offset: -2px; }
+.faq__chev { flex: none; font-size: 20px; font-weight: 600; color: #7c1622; transition: transform 220ms ease; }
+.faq__item.is-open .faq__chev { transform: rotate(45deg); }
+.faq__a { padding: 0 18px 16px; }
+.faq__a p { margin: 0; font-size: 13.5px; line-height: 1.65; color: #4d4338; }
+.home-rating { background: #faf6ed; border-block: 1px solid #eadfce; }
+.home-rating__inner { max-width: 860px; margin: 0 auto; padding: 52px 20px; display: grid; gap: 14px; justify-items: start; }
+.home-rating__title { font-family: var(--font-display); font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; }
+.home-rating__title em { color: #7c1622; }
+.home-rating__copy { margin: 0; font-size: 13.5px; line-height: 1.6; color: #4d4338; max-width: 560px; }
 
 /* Keep the wave aligned with the centered content on very wide screens. */
 @media (min-width: 1280px) {
