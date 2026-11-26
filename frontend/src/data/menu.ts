@@ -68,7 +68,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Small Plates, Big Beginnings",
     description:
       "Fiery fries, crisp Manchurians and tandoor-kissed bites — the opening act to every Raaha meal.",
-    image: "/images/dishes/chicken-lollipop.webp",
+    image: "/images/dishes/peri-peri-wings.webp",
   },
   {
     id: "grill-tandoor",
@@ -84,7 +84,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Seeraga Samba & Dum Specials",
     description:
       "Fragrant short-grain rice layered with masala and sealed on dum, the way Madurai loves it.",
-    image: "/images/dishes/family-biryani.webp",
+    image: "/images/dishes/mutton-biryani.webp",
   },
   {
     id: "mains",
@@ -100,7 +100,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Dosa, Idli & Tiffin Classics",
     description:
       "Golden dosas, cloud-soft idlis and homestyle sambar — tiffin favourites served all day.",
-    image: "/images/dishes/idli-sambar.webp",
+    image: "/images/dishes/ghee-roast.webp",
   },
   {
     id: "breads-rice",
