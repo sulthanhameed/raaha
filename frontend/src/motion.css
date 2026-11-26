@@ -12,7 +12,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #5e1420, #c9a662 70%, #f0d89e);
+  background: linear-gradient(90deg, #7c2128, #c6a15b 70%, #f0d89e);
   transform: scaleX(0);
   transform-origin: left center;
 }

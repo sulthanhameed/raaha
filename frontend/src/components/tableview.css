@@ -79,7 +79,7 @@
   background: #7a1f24;
   color: #fffbf0;
   box-shadow:
-    0 0 0 2px #c9a662,
+    0 0 0 2px #c6a15b,
     0 10px 22px rgba(122, 31, 36, .35);
 }
 
@@ -92,7 +92,7 @@
   width: 88px;
   height: 8px;
   border-radius: 8px 8px 0 0;
-  background: linear-gradient(90deg, transparent, #c9a662 20%, #c9a662 80%, transparent);
+  background: linear-gradient(90deg, transparent, #c6a15b 20%, #c6a15b 80%, transparent);
 }
 .plan__entry span {
   position: absolute;
@@ -126,5 +126,5 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 4px;
-  background: linear-gradient(90deg, #c9a662, #7a1f24 60%, transparent);
+  background: linear-gradient(90deg, #c6a15b, #7a1f24 60%, transparent);
 }
