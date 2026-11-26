@@ -104,7 +104,7 @@ export function FoodPage({ itemId }: { itemId: string }) {
                   <img
                     src={item.image}
                     alt={`Food photograph representing ${item.name} from ${cat.name}`}
-                    className="food-detail__photo img-warm aspect-square w-full object-cover"
+                    className="food-detail__photo img-warm aspect-[4/5] w-full object-cover"
                     loading="eager"
                     onError={showFoodImageFallback}
                   />

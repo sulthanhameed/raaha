@@ -253,7 +253,7 @@ export function FoodCard({ item, index = 0 }: { item: FoodItem; index?: number }
           aria-label={`${item.name}, ${formatPrice(item.price)}. View details`}
           aria-describedby={descriptionId}
         />
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-[4/5] overflow-hidden">
           {/* Only this artwork wrapper leans toward the pointer; the stretched
               detail button above is a sibling and never moves. */}
           <div className="tilt-art h-full w-full" data-tilt-layer>
