@@ -20,6 +20,7 @@ import { showFoodImageFallback } from "../utils/imageFallback";
 import { usePauseOffscreen } from "../utils/usePauseOffscreen";
 import { BannerGlow } from "./BannerGlow";
 import { FaqSection, SiteRatingSection } from "./GuestSections";
+import { InstagramSection } from "./InstagramSection";
 import { CountUpValue } from "./CountUpValue";
 import { EditorialCategories } from "./EditorialCategories";
 import { EmberAtmosphere } from "./EmberAtmosphere";
@@ -429,6 +430,7 @@ export function HomePage() {
       <Signatures />
       <ServicesStrip />
       <Testimonials />
+      <InstagramSection />
       <FaqSection />
       <SiteRatingSection />
       <VisitAndCta />

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { type Category } from "../data/menu";
 import { useMenu } from "../store/menu";
-import { tabletopCategoryImage } from "../data/tabletop";
+import { categoryArtFor } from "../data/tabletop";
 import { useApp } from "../store/app";
 import { cn } from "../utils/cn";
 import { showFoodImageFallback } from "../utils/imageFallback";
@@ -66,7 +66,7 @@ function CategoryEntry({
       >
         <span className="editorial-plate__well">
           <img
-            src={tabletopCategoryImage(category)}
+            src={categoryArtFor(category)}
             alt=""
             loading={!home && index < 4 ? "eager" : "lazy"}
             fetchPriority={!home && index === 0 ? "high" : undefined}

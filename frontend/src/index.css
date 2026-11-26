@@ -685,6 +685,95 @@ body {
 .editorial-surface--menu .editorial-surface__end { padding-block: 18px; }
 .editorial-surface--menu .editorial-surface__end > span { align-self: flex-start; transform: translateY(-12px); }
 
+/* From our Instagram: feed tiles with real captions and engagement. */
+.home-insta { background: #fff8ef; border-block: 1px solid #eadfce; }
+.home-insta__inner { max-width: 1160px; margin: 0 auto; padding: 64px 20px 72px; }
+.home-insta__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #775021;
+}
+.home-insta__title { font-family: var(--font-display); font-size: clamp(26px, 3vw, 40px); font-weight: 500; margin: 10px 0 0; }
+.home-insta__title em { color: #7c2128; }
+.home-insta__copy { margin: 10px 0 0; max-width: 560px; font-size: 13.5px; line-height: 1.6; color: #4d4338; }
+.home-insta__follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #7c2128;
+  color: #fff8ef;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.home-insta__follow:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgba(23, 18, 8, 0.55); }
+.home-insta__follow:focus-visible { outline: 2px solid #775021; outline-offset: 3px; }
+.home-insta__grid {
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.home-insta__tile {
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fdf3e4;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 12px 28px -18px rgba(23, 18, 8, 0.45);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.home-insta__tile:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -18px rgba(23, 18, 8, 0.5); }
+.home-insta__tile:focus-visible { outline: 2px solid #7c2128; outline-offset: 3px; }
+.home-insta__media { position: relative; display: block; aspect-ratio: 4 / 5; background: #eadfce; }
+.home-insta__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms ease; }
+.home-insta__tile:hover .home-insta__img { transform: scale(1.05); }
+.home-insta__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(23, 18, 8, 0.72);
+  color: #fff8ef;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+.home-insta__body { display: block; padding: 12px 14px 14px; }
+.home-insta__caption {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.home-insta__meta { display: flex; align-items: center; gap: 12px; margin-top: 9px; font-size: 11px; font-weight: 700; color: #4d4338; }
+.home-insta__stat { display: inline-flex; align-items: center; gap: 5px; }
+.home-insta__stat svg { color: #7c2128; }
+.home-insta__date { margin-left: auto; font-weight: 600; color: #6a5c4b; }
+
 /* Guest voice: star rating input and the FAQ accordion. */
 .rate-stars { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 .rate-stars__input { display: inline-flex; gap: 2px; }
