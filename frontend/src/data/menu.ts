@@ -68,7 +68,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Small Plates, Big Beginnings",
     description:
       "Fiery fries, crisp Manchurians and tandoor-kissed bites — the opening act to every Raaha meal.",
-    image: "/images/dishes/peri-peri-wings.webp",
+    image: "/images/dishes/chicken-65.webp",
   },
   {
     id: "grill-tandoor",
