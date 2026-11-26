@@ -146,7 +146,7 @@ export function AboutPage() {
           {TABLE.map(({ image, title, detail, category }, index) => (
             <Reveal key={title} delay={index * 90}>
               <button type="button" onClick={() => navigate("menu", category)} className="m3-card m3-card--interactive group block h-full w-full overflow-hidden text-left">
-                <img src={image} alt="" loading="lazy" onError={showFoodImageFallback} className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={image} alt="" loading="lazy" onError={showFoodImageFallback} className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <span className="flex items-center justify-between gap-4 p-5">
                   <span><span className="block text-[12px] font-semibold text-maroon">{detail}</span><span className="mt-1 block font-display text-[23px] font-semibold text-ink">{title}</span></span>
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cream text-maroon"><ArrowUpRight size={20} aria-hidden="true" /></span>

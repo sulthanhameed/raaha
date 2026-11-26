@@ -174,7 +174,7 @@ function Story() {
               alt="Representative photograph of tandoori chicken"
               loading="lazy"
               onError={showFoodImageFallback}
-              className="anim-kenburns img-warm aspect-[4/3] w-full object-cover"
+              className="anim-kenburns img-warm aspect-square w-full object-cover"
             />
             <SteamField />
           </div>
@@ -183,7 +183,7 @@ function Story() {
               src={INTERIOR_IMG}
               alt="A warm wooden restaurant table"
               loading="lazy"
-              className="img-warm aspect-[4/3] w-full object-cover"
+              className="img-warm aspect-square w-full object-cover"
             />
           </div>
           <div className="absolute -top-5 -left-2 rounded-[22px] bg-ink px-5 py-4 shadow-pop sm:-left-5">
