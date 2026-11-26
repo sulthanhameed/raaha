@@ -56,7 +56,7 @@ export function InstagramSection() {
           Recent posts from Raaha Restaurant &amp; Grill on Instagram
         </h2>
         <ul className="home-insta__grid">
-          {INSTA_POSTS.slice(0, 9).map((post) => {
+          {INSTA_POSTS.map((post) => {
             const media = instaMediaFor(post);
             const isVideo = media.endsWith(".mp4") || media.endsWith(".webm");
             return (
