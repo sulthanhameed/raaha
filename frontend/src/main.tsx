@@ -1,9 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource-variable/fraunces";
-import "@fontsource-variable/fraunces/wght-italic.css";
-import "@fontsource-variable/manrope";
-import "@fontsource-variable/outfit";
+import "@fontsource-variable/cormorant-garamond";
+import "@fontsource-variable/cormorant-garamond/wght-italic.css";
+import "@fontsource-variable/jost";
 import "./index.css";
 import "./material.css";
 import "./motion.css";

@@ -1,9 +1,9 @@
 /* Raaha's Material 3-inspired theme. Color roles are paired with their
    corresponding on-colors; the warm palette keeps the restaurant identity. */
 :root {
-  --md-sys-color-primary: #7c2128;
+  --md-sys-color-primary: #5e1420;
   --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-primary-container: #f9dcda;
+  --md-sys-color-primary-container: #eeddc0;
   --md-sys-color-on-primary-container: #471317;
   --md-sys-color-secondary: #715b3a;
   --md-sys-color-on-secondary: #ffffff;
@@ -13,7 +13,7 @@
   --md-sys-color-on-tertiary: #ffffff;
   --md-sys-color-tertiary-container: #d6eacc;
   --md-sys-color-on-tertiary-container: #112011;
-  --md-sys-color-background: #faf6ed;
+  --md-sys-color-background: #f8f2e7;
   --md-sys-color-on-background: #211b16;
   --md-sys-color-surface: #fff8f0;
   --md-sys-color-on-surface: #211b16;
@@ -40,12 +40,12 @@
   --md-sys-elevation-level2: 0 12px 32px rgba(52, 33, 23, .12), 0 2px 6px rgba(52, 33, 23, .06);
   --md-sys-motion-standard: cubic-bezier(.2, 0, 0, 1);
   /* Brand display faces sit alongside Material's functional body/label scale. */
-  --md-sys-typescale-display-large: 500 57px/64px "Fraunces Variable", Georgia, serif;
-  --md-sys-typescale-headline-large: 600 32px/40px "Fraunces Variable", Georgia, serif;
-  --md-sys-typescale-title-large: 600 22px/28px "Fraunces Variable", Georgia, serif;
-  --md-sys-typescale-body-large: 400 16px/24px "Manrope Variable", system-ui, sans-serif;
-  --md-sys-typescale-body-medium: 400 14px/20px "Manrope Variable", system-ui, sans-serif;
-  --md-sys-typescale-label-large: 700 14px/20px "Manrope Variable", system-ui, sans-serif;
+  --md-sys-typescale-display-large: 500 57px/64px var(--font-display);
+  --md-sys-typescale-headline-large: 600 32px/40px var(--font-display);
+  --md-sys-typescale-title-large: 600 22px/28px var(--font-display);
+  --md-sys-typescale-body-large: 400 16px/24px var(--font-sans);
+  --md-sys-typescale-body-medium: 400 14px/20px var(--font-sans);
+  --md-sys-typescale-label-large: 700 14px/20px var(--font-sans);
 
   /* Section-heading gold has a different accessible pairing on dark bands. */
   --raaha-accent-deep: #775021;

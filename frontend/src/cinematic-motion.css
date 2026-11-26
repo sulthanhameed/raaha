@@ -183,7 +183,7 @@
   height: 26px;
   border-radius: 50%;
   background: radial-gradient(circle at 34% 30%, #fff6e2, #e7c689 52%, #a97f34 100%);
-  box-shadow: 0 6px 18px rgba(23, 18, 8, .34), 0 0 0 1px rgba(255, 246, 226, .5);
+  box-shadow: 0 6px 18px rgba(18, 13, 7, .34), 0 0 0 1px rgba(255, 246, 226, .5);
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -275,7 +275,7 @@
   width: 100%;
   height: 100%;
   border-radius: 2px;
-  background: linear-gradient(90deg, #c6a15b, #f0d69b);
+  background: linear-gradient(90deg, #c9a662, #f0d69b);
   transform-origin: left center;
 }
 .toast-icon { transform-origin: 50% 60%; }

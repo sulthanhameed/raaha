@@ -12,22 +12,22 @@ import { launchCartFlight } from "../utils/cartFlight";
 export function LogoMark({ size = 44, dark = false }: { size?: number; dark?: boolean }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" className="shrink-0">
-      <circle cx="32" cy="32" r="30" fill={dark ? "#FAF6ED" : "#171208"} />
-      <circle cx="32" cy="32" r="26.5" fill="none" stroke="#C6A15B" strokeWidth="1.3" />
-      <circle cx="32" cy="32" r="23" fill="none" stroke="#C6A15B" strokeWidth="0.6" opacity="0.6" />
+      <circle cx="32" cy="32" r="30" fill={dark ? "#F8F2E7" : "#120d07"} />
+      <circle cx="32" cy="32" r="26.5" fill="none" stroke="#C9A662" strokeWidth="1.3" />
+      <circle cx="32" cy="32" r="23" fill="none" stroke="#C9A662" strokeWidth="0.6" opacity="0.6" />
       <text
         x="32"
         y="41.5"
         textAnchor="middle"
-        fontFamily="'Fraunces Variable', Georgia, serif"
+        fontFamily="'Cormorant Garamond Variable', Georgia, serif"
         fontWeight="600"
         fontSize="27"
-        fill="#C6A15B"
+        fill="#C9A662"
       >
         R
       </text>
-      <circle cx="32" cy="13.5" r="1.4" fill="#C6A15B" />
-      <circle cx="32" cy="50.5" r="1.4" fill="#C6A15B" />
+      <circle cx="32" cy="13.5" r="1.4" fill="#C9A662" />
+      <circle cx="32" cy="50.5" r="1.4" fill="#C9A662" />
     </svg>
   );
 }

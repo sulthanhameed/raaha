@@ -35,7 +35,7 @@
   bottom: -.08em;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #c6a15b 20%, #edce91 80%, transparent);
+  background: linear-gradient(90deg, transparent, #c9a662 20%, #edce91 80%, transparent);
   opacity: 0;
   pointer-events: none;
   transform: scaleX(0);

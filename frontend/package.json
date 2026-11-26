@@ -16,9 +16,8 @@
     "package:hosting": "sh scripts/package-hosting.sh"
   },
   "dependencies": {
-    "@fontsource-variable/fraunces": "^5.3.0",
-    "@fontsource-variable/manrope": "^5.3.0",
-    "@fontsource-variable/outfit": "^5.3.0",
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/jost": "^5.3.0",
     "@marsidev/react-turnstile": "^1.6.3",
     "@supabase/supabase-js": "^2.119.2",
     "clsx": "2.1.1",
