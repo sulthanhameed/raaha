@@ -52,7 +52,15 @@ export const INSTA_STAND_INS: Record<string, string> = {
    "Df4jGSSvqev": "/media/insta/Df4jGSSvqev.mp4"
    Reels may be .mp4/.webm; photos .jpg/.webp. Tiles and, via
    categoryArtFor, category plates switch over automatically. */
-export const INSTA_MEDIA: Record<string, string> = {};
+export const INSTA_MEDIA: Record<string, string> = {
+  // Real restaurant photography retrieved from the brand's public
+  // listings and Instagram mirrors on 2026-11-28 (owner-directed).
+  "DgALNlchFsQ": "/images/insta/dining-hall-night.jpg",
+  "Df4jGSSvqev": "/images/insta/biryani-platter.webp",
+  "Dfysj0oPkNK": "/images/insta/entrance-sign.jpg",
+  "Dftb-4tPecV": "/images/insta/dining-hall-day.jpg",
+  "DfriCwUPw7k": "/images/insta/kozi-doi-card.jpg",
+};
 
 /* Optional category artwork overrides backed by uploaded Instagram
    photos, e.g. "biryani": "/media/insta/mandi-reel-frame.jpg". */

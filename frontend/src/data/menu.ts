@@ -318,7 +318,7 @@ export const MENU: FoodItem[] = [
     description:
       "Hand-minced mutton with ginger, green chilli and coriander, skewered and grilled over coals.",
     ingredients: ["Mutton Mince", "Ginger", "Green Chilli", "Coriander", "Garam Masala", "Butter"],
-    image: "/images/dishes/mutton-seekh-kebab.webp",
+    image: "/images/insta/seekh-kabab-plate.jpg",
     rating: 4.7,
     ratingsCount: 780,
     time: "22 min",

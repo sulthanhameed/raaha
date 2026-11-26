@@ -685,94 +685,91 @@ body {
 .editorial-surface--menu .editorial-surface__end { padding-block: 18px; }
 .editorial-surface--menu .editorial-surface__end > span { align-self: flex-start; transform: translateY(-12px); }
 
-/* From our Instagram: feed tiles with real captions and engagement. */
-.home-insta { background: #fff8ef; border-block: 1px solid #eadfce; }
-.home-insta__inner { max-width: 1160px; margin: 0 auto; padding: 64px 20px 72px; }
-.home-insta__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #775021;
+/* From our Instagram: profile header + square photo grid, app-style. */
+.home-insta { background: #171208; color: #faf6ed; }
+.home-insta__inner { max-width: 1060px; margin: 0 auto; padding: 56px 20px 64px; }
+.home-insta__profile { display: flex; align-items: center; gap: 22px; }
+.home-insta__avatar {
+  flex: none;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #c6a15b, #7c2128 60%, #c6a15b);
 }
-.home-insta__title { font-family: var(--font-display); font-size: clamp(26px, 3vw, 40px); font-weight: 500; margin: 10px 0 0; }
-.home-insta__title em { color: #7c2128; }
-.home-insta__copy { margin: 10px 0 0; max-width: 560px; font-size: 13.5px; line-height: 1.6; color: #4d4338; }
+.home-insta__avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid #171208; display: block; }
+.home-insta__handle { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 17px; font-weight: 700; letter-spacing: 0.01em; }
+.home-insta__handle > svg { color: #dcc084; }
 .home-insta__follow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-  padding: 10px 18px;
+  gap: 6px;
+  margin-left: 6px;
+  padding: 7px 14px;
   border-radius: 999px;
   background: #7c2128;
   color: #fff8ef;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
-.home-insta__follow:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgba(23, 18, 8, 0.55); }
-.home-insta__follow:focus-visible { outline: 2px solid #775021; outline-offset: 3px; }
+.home-insta__follow:hover { transform: translateY(-2px); box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.7); }
+.home-insta__follow:focus-visible { outline: 2px solid #dcc084; outline-offset: 3px; }
+.home-insta__stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 0; font-size: 12.5px; color: #e7d9bd; }
+.home-insta__stats strong { color: #faf6ed; font-weight: 800; }
+.home-insta__bio { margin: 8px 0 0; padding: 0; list-style: none; font-size: 12.5px; line-height: 1.6; color: #dcc084; }
 .home-insta__grid {
-  margin: 30px 0 0;
+  margin: 26px 0 0;
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
-.home-insta__tile {
-  display: block;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #fdf3e4;
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 0 12px 28px -18px rgba(23, 18, 8, 0.45);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+.home-insta__grid > li { min-width: 0; }
+@media (max-width: 639px) {
+  .home-insta__profile { gap: 14px; }
+  .home-insta__avatar { width: 72px; height: 72px; }
 }
-.home-insta__tile:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -18px rgba(23, 18, 8, 0.5); }
-.home-insta__tile:focus-visible { outline: 2px solid #7c2128; outline-offset: 3px; }
-.home-insta__media { position: relative; display: block; aspect-ratio: 4 / 5; background: #eadfce; }
-.home-insta__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms ease; }
-.home-insta__tile:hover .home-insta__img { transform: scale(1.05); }
-.home-insta__badge {
+.home-insta__tile { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; background: #2b2010; border-radius: 4px; }
+.home-insta__tile:focus-visible { outline: 2px solid #dcc084; outline-offset: 2px; }
+.home-insta__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms ease; }
+.home-insta__tile:hover .home-insta__img { transform: scale(1.06); }
+.home-insta__reel {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 8px;
+  right: 8px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: rgba(23, 18, 8, 0.72);
+  gap: 4px;
   color: #fff8ef;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  backdrop-filter: blur(4px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
-.home-insta__body { display: block; padding: 12px 14px 14px; }
-.home-insta__caption {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-size: 12.5px;
-  line-height: 1.5;
+.home-insta__hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: rgba(23, 18, 8, 0.55);
+  color: #fff8ef;
+  font-size: 14px;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 200ms ease;
 }
-.home-insta__meta { display: flex; align-items: center; gap: 12px; margin-top: 9px; font-size: 11px; font-weight: 700; color: #4d4338; }
-.home-insta__stat { display: inline-flex; align-items: center; gap: 5px; }
-.home-insta__stat svg { color: #7c2128; }
-.home-insta__date { margin-left: auto; font-weight: 600; color: #6a5c4b; }
+.home-insta__tile:hover .home-insta__hover,
+.home-insta__tile:focus-visible .home-insta__hover { opacity: 1; }
+.home-insta__stat { display: inline-flex; align-items: center; gap: 6px; }
+.home-insta__stat svg { fill: currentColor; }
+.home-insta__foot { margin: 18px 0 0; font-size: 11.5px; color: #bfa87e; }
+.home-insta__foot a { color: #dcc084; text-decoration: underline; text-underline-offset: 3px; }
 
 /* Guest voice: star rating input and the FAQ accordion. */
 .rate-stars { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }

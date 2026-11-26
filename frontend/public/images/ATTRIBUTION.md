@@ -61,3 +61,9 @@ Every photograph on this site is real photography, stored locally for reliable l
 - `raaha-dining-room.jpg`: https://www.pexels.com/photo/32010784/ (warmly lit restaurant interior at night)
 
 `food-unavailable.svg` and `table-unavailable.svg` are original vector fallbacks, not photographs.
+
+## Restaurant-supplied photography (public/images/insta/)
+
+Branded dish cards, dining-hall and entrance photographs of Raaha Restaurant & Grill,
+retrieved 2026-11-28 from the restaurant's public listings and Instagram mirrors at the
+owner's direction. © Raaha Restaurant & Grill; used on the site and in the Instagram feed section.
