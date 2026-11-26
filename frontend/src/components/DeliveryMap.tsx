@@ -104,7 +104,7 @@ export function DeliveryMap({
       color: "#9a7a33", weight: 5, opacity: 0.7, dashArray: "9 10", lineCap: "round",
     }).addTo(map);
     travelledLine.current = L.polyline([], {
-      color: "#7c2128", weight: 6, opacity: 0.95, lineCap: "round",
+      color: "#741a24", weight: 6, opacity: 0.95, lineCap: "round",
     }).addTo(map);
 
     // The moving courier is illustrative, not a separate map action. Let pointer

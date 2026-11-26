@@ -120,8 +120,9 @@ test("category selection adds a short, noninteractive flourish without resizing 
   await second.getByRole("button", { name: /Select Grill & Tandoor/ }).click();
   await expect(second.locator(".editorial-plate__sparks")).toBeHidden();
   const grill = itemsByCategory("grill-tandoor")[0];
-  await page.locator("#menu-category-dishes .menu-dishes__list")
-    .getByRole("button", { name: `${grill.name} ${formatPrice(grill.price)}`, exact: true }).click();
+  await second.getByRole("button", { name: "View Menu" }).click();
+  await page.locator(".menu-dishes__list")
+    .getByRole("button", { name: `${grill.name} ${formatPrice(grill.price)}` }).click();
   await expect(page).toHaveURL(new RegExp(`/#/food/${grill.id}$`));
 });
 
@@ -247,7 +248,8 @@ test("motion and menu controls still work without IntersectionObserver", async (
   await page.goto("/#/menu");
   const row = page.locator(".editorial-category").first();
   await row.getByRole("button", { name: /Select Starters/ }).click();
-  const dishes = page.locator("#menu-category-dishes .menu-dishes__list");
+  await row.getByRole("button", { name: "View Menu" }).click();
+  const dishes = page.locator(".menu-dishes__list");
   await expect(dishes).toBeVisible();
   await dishes.getByRole("button", { name: /Chicken 65/ }).click();
   await expect(page).toHaveURL(/\/#\/food\/chicken-65$/);
@@ -262,12 +264,13 @@ test("carousel taps navigate without widening the phone layout", async ({ browse
     await page.goto("/#/menu");
     const row = page.locator(".editorial-category").first();
     await row.getByRole("button", { name: /Select Starters/ }).tap();
-    const dishes = page.locator("#menu-category-dishes .menu-dishes__list");
+    await row.getByRole("button", { name: "View Menu" }).tap();
+    await expect(page).toHaveURL(/\/#\/dishes\/starters$/);
+    const dishes = page.locator(".menu-dishes__list");
     await dishes.getByRole("button", { name: /Pepper Chicken Fry/ }).tap();
     await expect(page).toHaveURL(/\/#\/food\/pepper-chicken-fry$/);
     await page.goBack();
-    await expect(page).toHaveURL(/\/#\/menu$/);
-    await row.getByRole("button", { name: /Select Starters/ }).tap();
+    await expect(page).toHaveURL(/\/#\/dishes\/starters$/);
     await expect(dishes).toBeVisible();
     // The dish card may grow the row, but never widens the phone layout.
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);

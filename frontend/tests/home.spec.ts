@@ -71,7 +71,9 @@ test("home links and the unchanged category plates lead to their destinations", 
   await page.goto("/#/home");
   await page.locator(".home-hero").getByRole("button", { name: "Explore the grill & tandoor menu" }).click();
   await expect(page).toHaveURL(/\/#\/menu\/grill-tandoor$/);
-  await expect(page.locator("#menu-category-dishes .menu-dishes__list")).toHaveAttribute("aria-label", "Grill & Tandoor dishes");
+  await page.getByRole("button", { name: "View Menu" }).click();
+  await expect(page).toHaveURL(/\/#\/dishes\/grill-tandoor$/);
+  await expect(page.locator(".menu-dishes__list")).toHaveAttribute("aria-label", "Grill & Tandoor dishes");
 
   await page.goto("/#/home");
   const category = CATEGORIES.find((entry) => entry.id === "biryani")!;
@@ -81,8 +83,8 @@ test("home links and the unchanged category plates lead to their destinations", 
   await expect(plate).toHaveAttribute("aria-pressed", "true");
   await expect(categories.locator(".editorial-category__dishes")).toHaveCount(0);
   await categories.getByRole("button", { name: "View Menu" }).click();
-  await expect(page).toHaveURL(/\/#\/menu\/biryani$/);
-  const dishes = page.locator("#menu-category-dishes .menu-dishes__list");
+  await expect(page).toHaveURL(/\/#\/dishes\/biryani$/);
+  const dishes = page.locator(".menu-dishes__list");
   await expect(dishes).toHaveAttribute("aria-label", "Biryani dishes");
   await expect(dishes.getByRole("listitem")).toHaveCount(itemsByCategory(category.id).length);
 });
@@ -93,7 +95,7 @@ test("the section order, guest book and closing invitation are restored", async 
     if (element.classList.contains("editorial-surface--home")) return "categories";
     return [...element.classList].find((name) => name.startsWith("home-"));
   }));
-  expect(order).toEqual(["home-hero", "home-marquee", "home-story", "categories", "home-signatures", "home-services", "home-testimonials", "home-visit", "home-invitation"]);
+  expect(order).toEqual(["home-hero", "home-marquee", "home-story", "categories", "home-signatures", "home-services", "home-testimonials", "home-insta", "home-faq", "home-rating", "home-visit", "home-invitation"]);
   const story = page.locator(".home-story");
   await expect(story).toContainText(`${MENU.length}`);
   await expect(story).toContainText(`${CATEGORIES.length}`);

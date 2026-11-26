@@ -16,7 +16,7 @@
   height: 48px;
 }
 .home-visit__map > div > .reveal:first-child {
-  background: #e8e2d7;
+  background: #eae2d2;
 }
 .home-visit__map > div > .reveal:first-child::before {
   position: absolute;
@@ -27,7 +27,7 @@
   background:
     linear-gradient(28deg, transparent 40%, rgba(255, 253, 248, .6) 40.2%, rgba(255, 253, 248, .6) 41%, transparent 41.2%),
     linear-gradient(115deg, transparent 51%, rgba(255, 253, 248, .65) 51.2%, rgba(255, 253, 248, .65) 52%, transparent 52.2%),
-    #e8e2d7;
+    #eae2d2;
   color: #665c50;
   content: "Open Maps for directions";
   font-size: 11px;

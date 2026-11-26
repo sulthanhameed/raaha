@@ -3,6 +3,7 @@ import { MenuProvider } from "./store/menu";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./components/HomePage";
+import { CategoryDishesPage } from "./components/CategoryDishes";
 import { MenuPage } from "./components/MenuPage";
 import { FoodPage } from "./components/FoodPage";
 import { AboutPage } from "./components/AboutPage";
@@ -39,6 +40,8 @@ function Pages() {
       return <TrackingPage />;
     case "food":
       return <FoodPage key={route.id} itemId={route.id ?? ""} />;
+    case "dishes":
+      return <CategoryDishesPage key={route.id} categoryId={route.id ?? ""} />;
     case "home":
     default:
       return <HomePage />;

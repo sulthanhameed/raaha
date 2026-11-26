@@ -84,7 +84,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Seeraga Samba & Dum Specials",
     description:
       "Fragrant short-grain rice layered with masala and sealed on dum, the way Madurai loves it.",
-    image: "/images/dishes/chicken-dum-biryani.webp",
+    image: "/images/dishes/mutton-biryani.webp",
   },
   {
     id: "mains",
@@ -100,7 +100,7 @@ export const CATEGORIES: Category[] = [
     tagline: "Dosa, Idli & Tiffin Classics",
     description:
       "Golden dosas, cloud-soft idlis and homestyle sambar — tiffin favourites served all day.",
-    image: "/images/dishes/masala-dosa.webp",
+    image: "/images/dishes/ghee-roast.webp",
   },
   {
     id: "breads-rice",
@@ -318,7 +318,7 @@ export const MENU: FoodItem[] = [
     description:
       "Hand-minced mutton with ginger, green chilli and coriander, skewered and grilled over coals.",
     ingredients: ["Mutton Mince", "Ginger", "Green Chilli", "Coriander", "Garam Masala", "Butter"],
-    image: "/images/dishes/mutton-seekh-kebab.webp",
+    image: "/images/insta/seekh-kabab-plate.jpg",
     rating: 4.7,
     ratingsCount: 780,
     time: "22 min",

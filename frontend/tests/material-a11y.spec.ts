@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("main routes have no detected WCAG-tagged violations", async ({ page }) => {
-  for (const route of ["home", "menu", "menu/biryani", "food/egg-biryani", "reserve", "services", "about", "cart", "tracking"]) {
+  for (const route of ["home", "menu", "menu/biryani", "dishes/biryani", "food/egg-biryani", "reserve", "services", "about", "cart", "tracking"]) {
     await page.goto(`/#/${route}`);
     await expectNoAutomatedViolations(page, route);
   }
@@ -44,8 +44,8 @@ test("normal-motion and paused selection states have no detected WCAG-tagged vio
   await page.locator(".editorial-category").first().getByRole("button", { name: /Select Starters/ }).click();
   await page.waitForTimeout(1200);
   await expectNoAutomatedViolations(page, "animated category selection");
-  await page.goto("/#/menu/biryani");
-  const biryaniDishes = page.locator("#menu-category-dishes .menu-dishes__list");
+  await page.goto("/#/dishes/biryani");
+  const biryaniDishes = page.locator(".menu-dishes__list");
   await expect(biryaniDishes).toBeVisible();
   await page.waitForTimeout(1200);
   await expectNoAutomatedViolations(page, "revealed category dish list");

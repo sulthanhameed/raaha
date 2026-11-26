@@ -90,7 +90,7 @@ export function Navbar() {
   }, [cartArrival]);
 
   const active = (p: Page) =>
-    route.page === p || (p === "menu" && route.page === "food");
+    route.page === p || (p === "menu" && (route.page === "food" || route.page === "dishes"));
 
   return (
     <>

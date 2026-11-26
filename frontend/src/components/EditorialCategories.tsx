@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { type Category } from "../data/menu";
 import { useMenu } from "../store/menu";
-import { tabletopCategoryImage } from "../data/tabletop";
+import { categoryArtFor } from "../data/tabletop";
 import { useApp } from "../store/app";
 import { cn } from "../utils/cn";
 import { showFoodImageFallback } from "../utils/imageFallback";
@@ -66,7 +66,7 @@ function CategoryEntry({
       >
         <span className="editorial-plate__well">
           <img
-            src={tabletopCategoryImage(category)}
+            src={categoryArtFor(category)}
             alt=""
             loading={!home && index < 4 ? "eager" : "lazy"}
             fetchPriority={!home && index === 0 ? "high" : undefined}
@@ -94,24 +94,15 @@ function CategoryEntry({
           </p>
           <Heading id={headingId} className="editorial-category__detail-title">{category.name}</Heading>
           <p>{count} dishes</p>
+          <button
+            type="button"
+            className="editorial-category__view"
+            aria-describedby={headingId}
+            onClick={() => navigate("dishes", category.id)}
+          >
+            <span>View Menu <ArrowUpRight size={14} aria-hidden="true" /></span>
+          </button>
         </div>
-      )}
-      {selected && (
-        <button
-          type="button"
-          className="editorial-category__view"
-          aria-describedby={headingId}
-          onClick={() => {
-            if (home) {
-              navigate("menu", category.id);
-              return;
-            }
-            const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-            document.getElementById("menu-category-dishes")?.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
-          }}
-        >
-          <span>View Menu <ArrowUpRight size={14} aria-hidden="true" /></span>
-        </button>
       )}
     </li>
   );
@@ -120,11 +111,9 @@ function CategoryEntry({
 export function EditorialCategories({
   home = false,
   initialSelectedId,
-  onReveal,
 }: {
   home?: boolean;
   initialSelectedId?: string;
-  onReveal?: (categoryId: string) => void;
 }) {
   const { categories: CATEGORIES, status } = useMenu();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -136,9 +125,8 @@ export function EditorialCategories({
     const index = CATEGORIES.findIndex((entry) => entry.id === initialSelectedId);
     if (index < 0) return;
     setSelectedIndex(index);
-    onReveal?.(initialSelectedId);
     document.getElementById(`editorial-cat-${initialSelectedId}`)?.scrollIntoView({ block: "center" });
-  }, [initialSelectedId, CATEGORIES, onReveal]);
+  }, [initialSelectedId, CATEGORIES]);
 
   return (
     <section
@@ -196,10 +184,7 @@ export function EditorialCategories({
               category={category}
               index={index}
               selected={selectedIndex === index}
-              onSelect={() => {
-                setSelectedIndex(index);
-                onReveal?.(category.id);
-              }}
+              onSelect={() => setSelectedIndex(index)}
               home={home}
             />
           ))}
