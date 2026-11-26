@@ -291,7 +291,7 @@ body {
    drawn larger than the plate box so the food reads bigger without
    moving any control geometry. */
 .editorial-plate__well img {
-  height: 132%;
+  height: 160%;
   aspect-ratio: 1;
   width: auto;
   object-fit: contain;
