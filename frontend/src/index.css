@@ -538,6 +538,9 @@ body {
 .menu-dishes__related-track {
   margin-top: 18px;
   overflow: hidden;
+  /* Hard paint containment: the drifting row can never widen the
+     document, in any motion preference or render timing. */
+  contain: paint;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
@@ -552,10 +555,10 @@ body {
 .menu-dishes__related-track:hover .menu-dishes__related-list,
 .menu-dishes__related-list:focus-within { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
-  /* No drift: the row becomes a plain horizontal scroller that never
-     widens the document. */
-  .menu-dishes__related-list { animation: none; width: auto; }
-  .menu-dishes__related-track { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  /* No drift: the row itself becomes the horizontal scroller, so its
+     overflow can never widen the document. */
+  .menu-dishes__related-list { animation: none; width: auto; overflow-x: auto; padding-bottom: 6px; }
+  .menu-dishes__related-track { -webkit-mask-image: none; mask-image: none; }
 }
 @keyframes related-drift {
   from { transform: translateX(0); }
